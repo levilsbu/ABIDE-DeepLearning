@@ -30,7 +30,6 @@
 
 \section{Introduction}
 
-\subsection{Project identification}
 The selected technology is \textit{BrainWaveNet: Wavelet-based Transformer for Autism Spectrum Disorder Diagnosis}, proposed by Jeong et al. (2024). It is a deep-learning model that analyses resting-state functional MRI (rs-fMRI) signals to classify participants as having an ASD diagnosis or belonging to a typically developing control group. The model transforms blood-oxygen-level-dependent (BOLD) time series using a complex Morlet continuous wavelet transform (CWT), then applies convolutional and Transformer components to learn temporal and spatial relationships across brain regions of interest (ROIs). It uses both real and imaginary components of the wavelet coefficients and combines them through attention mechanisms (Jeong et al., 2024).
 
 BrainWaveNet was evaluated using ABIDE-I. From 1,112 participants across 17 international sites, the authors selected 897 participants following quality-control criteria: 414 ASD participants and 483 typically developing controls (Jeong et al., 2024). ABIDE-I is a multi-site data-sharing initiative containing resting-state and anatomical MRI together with phenotypic information (Di Martino et al., 2014). BrainWaveNet is a published healthcare research prototype rather than a clinically deployed diagnostic product; the paper reports retrospective experiments and does not demonstrate routine hospital use or improved patient outcomes.
