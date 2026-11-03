@@ -156,12 +156,12 @@ arrow/.style={-{Latex[length=2mm]},thick}]
 \node[control,below=0.25cm of p4] (c4) {Locked test set, external/site-held-out validation, subgroup metrics};
 \node[control,below=0.25cm of p5] (c5) {Human oversight, monitoring, incident response and withdrawal};
 \draw[arrow] (p1)--(c1); \draw[arrow] (p2)--(c2); \draw[arrow] (p3)--(c3); \draw[arrow] (p4)--(c4); \draw[arrow] (p5)--(c5);
+\node[draw,rounded corners,fill=orange!14,align=center,text width=15.3cm,below=0.45cm of c3,minimum height=0.75cm] (values) {\textbf{Continuous ethical platform:} SUM (Respect, Connect, Protect, Care) \quad | \quad FAST (Fairness, Accountability, Sustainability, Transparency)};
 \draw[<->,thick] (c1.south) -- (values.north -| c1.south);
 \draw[<->,thick] (c2.south) -- (values.north -| c2.south);
 \draw[<->,thick] (c3.south) -- (values.north -| c3.south);
 \draw[<->,thick] (c4.south) -- (values.north -| c4.south);
 \draw[<->,thick] (c5.south) -- (values.north -| c5.south);
-\node[draw,rounded corners,fill=orange!14,align=center,text width=15.3cm,below=0.45cm of c3,minimum height=0.75cm] (values) {\textbf{Continuous ethical platform:} SUM (Respect, Connect, Protect, Care) \quad | \quad FAST (Fairness, Accountability, Sustainability, Transparency)};
 \node[draw,rounded corners,fill=purple!10,align=center,text width=15.3cm,below=0.25cm of values,minimum height=0.7cm] (review) {Governance gates and SIA reviews: Alpha (before data work) $\rightarrow$ Alpha-to-Beta (before pilot) $\rightarrow$ Beta (periodic reassessment)};
 \draw[arrow] (values)--(review);
 \end{tikzpicture}}
