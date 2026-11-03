@@ -159,49 +159,6 @@ Figure~\ref{fig:pbg} shows the relationship between lifecycle gates and continuo
 
 Table~\ref{tab:gates} operationalises the framework. The initial Alpha review asks whether the problem should be pursued at all; Alpha-to-Beta is a controlled release decision; Beta review tests whether real-world evidence still supports continuation. If evidence is inadequate, the correct decision is to pause, redesign or stop rather than lower the threshold for approval.
 
-\subsection{Detailed governance stages}
-PBG embeds ethical review into project decisions rather than treating ethics as a one-off approval. The framework below is a proposed governance plan for redevelopment, not a claim that BrainWaveNet already operates these controls. Each lifecycle stage has an accountable owner, required evidence and a decision gate. SUM and FAST apply throughout.
-
-\subsection{Problem formulation and stakeholder governance}
-The published task is binary classification of ASD and typically developing participants from rs-fMRI. The paper does not establish a specific clinical user, care pathway or patient benefit. Before further development, an initial Social Impact Assessment (SIA) at the Alpha stage should establish whether the problem is worth pursuing, who may benefit or be harmed, and whether an MRI-based tool addresses a need identified by autistic people and clinicians. It should define prohibited uses, including autonomous diagnosis, and record alternatives such as not building the system.
-
-A governance group should include an accountable project lead, clinical lead, data/ML lead, data-protection and security specialist, independent ethics/fairness reviewer, and autistic community representatives. Representatives should be appropriately supported and have real influence over purpose, evaluation, communication and release. A clinical governance or release board should be able to refuse, pause or withdraw the project.
-
-\subsection{Data acquisition and preprocessing}
-ABIDE-I began with 1,112 participants across 17 sites; BrainWaveNet retained 897 after quality control. The retained diagnostic groups are relatively balanced, but this does not establish representativeness across age, sex, site, IQ or clinical presentation. The paper does not provide a detailed subgroup comparison of included and excluded participants. ABIDE phenotype fields could support further analysis, although completeness varies. Original research permissions should not be assumed to authorise a new clinical purpose.
-
-At the data gate, the team should document provenance, permitted use, ethics context, access controls, phenotype completeness and data minimisation. It should publish a participant flow diagram and compare retained and excluded cases by diagnosis, site and available demographic variables. At the preprocessing gate, versioned scripts should record CPAC version, filtering, parcellation, cropping, CWT settings and quality-control decisions. Sensitivity analyses should examine whether cropping to 78 volumes, motion, site and exclusion thresholds change performance. Harmonisation must be evaluated rather than assumed to remove site effects.
-
-\subsection{Modelling, testing and validation}
-The reported AUC of 0.7388 and accuracy of 67.55\% are encouraging only as preliminary research results. Sensitivity of 66.49\% and specificity of 68.35\% imply substantial classification error, and their standard deviations indicate variability. The paper does not provide external clinical validation, subgroup metrics or evidence that the model improves decisions. Its ROI ranking is exploratory and should not be interpreted as a causal explanation.
-
-A responsible validation gate should lock the final test set before model selection, report confidence intervals and calibration, and evaluate site-held-out and independent external cohorts. Pre-specified subgroup analyses should cover age, sex, site and clinically relevant characteristics where sample sizes permit; small groups should be reported as uncertain rather than silently omitted. The team should compare clinically relevant baselines and determine statistical as well as clinical significance. The public implementation's repeated test evaluation should be removed from routine training logs or isolated so it cannot influence choices. Research on algorithmic bias shows that unequal representation and measurement processes can create systematic disparities, so evaluation must examine the full pipeline rather than accuracy alone \parencite{suresh2021,mehrabi2021}.
-
-\subsection{Deployment, monitoring and SIA reassessment}
-The available evidence describes research experiments and code publication, not routine hospital deployment, prospective clinical evaluation, regulatory approval or real-world monitoring. This is an evidence gap, not evidence of a failed clinical service. The model should therefore remain research-only and must not be presented as a diagnostic product.
-
-If a future controlled pilot is proposed, an updated Alpha-to-Beta SIA should record changes made during development, stakeholder feedback, residual risks and reasons for proceeding. Release should require independent validation, institutional and regulatory review as applicable, clinical safety assessment, user training, privacy/security controls, human oversight and a documented rollback plan. Clinicians must retain decision authority and be able to disregard the output. Patients and families should receive clear explanations of intended use and uncertainty. Human oversight must be designed into workflow and training, not treated as a generic disclaimer; automation bias and unclear responsibility can otherwise weaken professional judgement \\parencite{topol2019,who2021,gmlp2021}.
-
-At the Beta stage, periodic reassessment should review subgroup performance, drift, site changes, complaints, adverse events, automation bias and unintended consequences. A named owner should have authority to suspend or withdraw the system when pre-agreed safety or fairness criteria are breached. SIA complements, rather than replaces, technical audit, clinical governance and monitoring \parencite{leslie2019,who2021,gmlp2021}.
-
-\subsection{Governance gates and evidence}
-Table~\ref{tab:gates} makes the proposed PBG process auditable. A gate should not be passed merely because documentation exists: evidence must be reviewed and the decision recorded.
-
-\begin{longtable}{p{2.5cm}p{6.1cm}p{5.0cm}}
-\caption{Proposed PBG gates for BrainWaveNet redevelopment.}
-\label{tab:gates}\\
-\toprule
-\textbf{Stage} & \textbf{Evidence required} & \textbf{Gate decision}\\
-\midrule
-Alpha: purpose & Intended-use statement; stakeholder map; initial SIA; benefit hypothesis; prohibited uses; initial risk register. & Proceed only if affected stakeholders support a justified research question and risks are proportionate.\\
-Data & Provenance, permissions, ethics context, privacy review, dataset factsheet and inclusion/exclusion analysis. & Reject data without clear permitted use; document representativeness and missingness limitations.\\
-Preprocessing & Versioned pipeline, quality-control log, site/motion analysis and sensitivity tests. & Require reproducibility and evidence that processing does not create avoidable subgroup or site bias.\\
-Model and validation & Model card, locked test protocol, confidence intervals, calibration, subgroup and external validation. & No clinical pilot until independent evidence meets pre-agreed clinical and fairness thresholds.\\
-Alpha-to-Beta: pilot release & Updated SIA, clinical safety case, human-factors review, training, privacy/security, monitoring and rollback plans. & Release only under approved, supervised conditions; otherwise remain research-only.\\
-Beta: reassessment & Monitoring reports, complaints, adverse events, drift and stakeholder review. & Continue, modify, pause or withdraw based on real-world evidence and documented review.\\
-\bottomrule
-\end{longtable}
-
 \subsection{Documented gaps and corrective priorities}
 The following are the principal gaps supported by the available paper and repository evidence. They are described as missing evidence or implementation risks, not as proof of intentional misconduct.
 
