@@ -103,7 +103,63 @@ Transparency & The paper describes its method and the code is public, but metric
 \end{tabularx}
 \end{table}
 
-\section{Process-Based Governance and Lifecycle Assessment}
+
+\subsection{Lifecycle assessment and controls}
+The lifecycle is treated as a sequence of accountable decisions, not as a checklist completed after model development. Table~\ref{tab:lifecycle} links the five required phases to the evidence currently available and the proposed safeguard. The distinction between observed evidence and proposed action is important: the table does not imply that the research team has already adopted these controls.
+
+\begin{table}[H]
+\centering
+\caption{Lifecycle assessment: evidence gaps and proportionate controls.}
+\label{tab:lifecycle}
+\small
+\begin{tabularx}{\textwidth}{p{2.5cm}Y Y}
+\toprule
+\textbf{Lifecycle phase} & \textbf{Assessment of current evidence} & \textbf{Proposed control and accountable lead}\\
+\midrule
+Problem formulation & A binary ASD/typically developing classification is specified, but a clinical user, care pathway and patient-relevant benefit are not established. & Project lead and autistic advisory group define the need, intended users, alternatives and prohibited uses; complete an initial SIA before further development.\\
+Data extraction and acquisition & ABIDE-I provides multi-site rs-fMRI and phenotype data. The BrainWaveNet cohort is quality-controlled, but detailed inclusion/exclusion and subgroup representativeness evidence is limited. & Data steward documents provenance, permissions, data minimisation, missingness and participant flow; privacy specialist reviews access and re-use conditions.\\
+Data preprocessing & CPAC, filtering, atlas parcellation, time-point cropping and CWT are described, but clean-environment reproducibility and sensitivity to processing choices need verification. & ML lead versions the pipeline and records QC; test sensitivity to motion, site, cropping, harmonisation and exclusion thresholds.\\
+Modelling, testing and validation & Internal metrics are reported, but no independent external clinical validation or subgroup performance is demonstrated; repeated test-set evaluation presents a governance risk. & Validation lead locks the test set, reports calibration and uncertainty, runs site-held-out/external and subgroup tests, and commissions independent review.\\
+Deployment, release and monitoring & No clinical deployment, prospective monitoring or operational safety process is evidenced. & Clinical safety lead prohibits diagnostic use until a safety case and approvals exist; monitor drift, complaints and harms, with pause and rollback authority.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{PBG landscape, roles and decision gates}
+Process-based governance assigns responsibility for identifying, assessing and treating risks throughout the lifecycle. For BrainWaveNet, the proposed governance group comprises a project sponsor, clinical safety lead, ML/data lead, data-protection and security specialist, independent ethics/fairness reviewer and autistic community representatives. The sponsor is accountable for resources and the decision to continue; the clinical lead owns clinical risk; the ML lead owns technical evidence; the data steward documents provenance and access; the independent reviewer challenges assumptions; and community representatives influence purpose, acceptable trade-offs and communication. A release board, rather than the model developer alone, should authorise any transition beyond research.
+
+Figure~\ref{fig:pbg} shows the relationship between lifecycle gates and continuous ethical review. SUM and FAST are cross-cutting criteria, while the SIA is revisited at Alpha, Alpha-to-Beta and Beta as the design and evidence change. A gate requires evidence and a recorded decision; completion of paperwork alone is not sufficient.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=0.35cm,
+  stage/.style={draw,rounded corners,align=center,text width=2.25cm,minimum height=0.95cm,font=\small,fill=blue!5},
+  gate/.style={-{Stealth[length=2mm]},thick},
+  band/.style={draw,rounded corners,align=center,fill=green!7,text width=12.2cm,minimum height=0.62cm,font=\small}
+]
+\node[stage] (p) {Problem\\ formulation};
+\node[stage,right=of p] (d) {Data acquisition\\ and access};
+\node[stage,right=of d] (x) {Preprocessing};
+\node[stage,right=of x] (m) {Modelling and\\ validation};
+\node[stage,right=of m] (r) {Release and\\ monitoring};
+\draw[gate] (p) -- (d);
+\draw[gate] (d) -- (x);
+\draw[gate] (x) -- (m);
+\draw[gate] (m) -- (r);
+\node[band,below=0.55cm of x] (sf) {Continuous assessment: SUM values + FAST principles + risk register + independent review};
+\node[band,below=0.35cm of sf,fill=orange!10] (sia) {Social Impact Assessment checkpoints: Alpha $\rightarrow$ Alpha-to-Beta $\rightarrow$ Beta};
+\draw[gate] (p.south) -- ++(0,-0.35) -| (sf.west);
+\draw[gate] (r.south) -- ++(0,-0.35) -| (sf.east);
+\draw[gate] (sf) -- (sia);
+\end{tikzpicture}
+\caption{Proposed PBG structure for BrainWaveNet. Ethical review is continuous, with formal SIA checkpoints at key lifecycle transitions.}
+\label{fig:pbg}
+\end{figure}
+
+Table~\ref{tab:gates} operationalises the framework. The initial Alpha review asks whether the problem should be pursued at all; Alpha-to-Beta is a controlled release decision; Beta review tests whether real-world evidence still supports continuation. If evidence is inadequate, the correct decision is to pause, redesign or stop rather than lower the threshold for approval.
+
+\subsection{Detailed governance stages}
 PBG embeds ethical review into project decisions rather than treating ethics as a one-off approval. The framework below is a proposed governance plan for redevelopment, not a claim that BrainWaveNet already operates these controls. Each lifecycle stage has an accountable owner, required evidence and a decision gate. SUM and FAST apply throughout.
 
 \subsection{Problem formulation and stakeholder governance}
@@ -146,7 +202,7 @@ Beta: reassessment & Monitoring reports, complaints, adverse events, drift and s
 \bottomrule
 \end{longtable}
 
-\section{Examples of Non-Compliance and Corrective Priorities}
+\subsection{Documented gaps and corrective priorities}
 The following are the principal gaps supported by the available paper and repository evidence. They are described as missing evidence or implementation risks, not as proof of intentional misconduct.
 
 \begin{itemize}
