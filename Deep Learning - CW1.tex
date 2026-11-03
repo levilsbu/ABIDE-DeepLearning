@@ -61,10 +61,10 @@ The public repository supports inspection but does not, by itself, establish rep
 For this report, the relevant system boundary therefore includes more than the neural network. It includes the scanner and acquisition protocol, site-specific preprocessing, participant selection, the model and its threshold, the professional interpreting an output, and the institutional process governing its use. Errors or bias can enter at any of these points, rather than solely through model architecture \\parencite{suresh2021}. This system-level boundary is used in the ethical assessment below.
 
 \section{Responsible AI Assessment}
-The assessment uses SUM to judge the project's relationship with affected people and FAST to examine practical system properties. The lifecycle analysis, PBG landscape and corrective priorities are integrated in this section so that each ethical concern is assessed once and then linked to a specific control, owner and decision point.
+SUM assesses the system's relationship with affected people; FAST assesses operational properties. Lifecycle controls link each identified gap to an owner and decision point.
 
 \subsection{SUM values}
-Leslie (2019) describes Respect, Connect, Protect and Care as values that support responsible AI. Table~\ref{tab:sum} summarises the evidence and the principal implication for BrainWaveNet.
+Leslie's SUM values are assessed in Table~\ref{tab:sum}.
 
 \begin{table}[H]
 \centering
@@ -84,7 +84,7 @@ Care & The research question may contribute to understanding connectivity, but n
 \end{table}
 
 \subsection{FAST principles}
-FAST examines fairness, accountability, sustainability and transparency as operational requirements \parencite{leslie2019}. Table~\ref{tab:fast} focuses on what the available evidence can and cannot establish.
+FAST operationalises fairness, accountability, sustainability and transparency (Table~\ref{tab:fast}) \parencite{leslie2019}.
 
 \begin{table}[H]
 \centering
@@ -105,7 +105,7 @@ Transparency & The paper describes its method and the code is public, but metric
 
 
 \subsection{Lifecycle assessment and controls}
-The lifecycle is treated as a sequence of accountable decisions, not as a checklist completed after model development. Table~\ref{tab:lifecycle} links the five required phases to the evidence currently available and the proposed safeguard. The distinction between observed evidence and proposed action is important: the table does not imply that the research team has already adopted these controls.
+Table~\ref{tab:lifecycle} links the five lifecycle phases to current evidence and proposed safeguards.
 
 \begin{table}[H]
 \centering
@@ -126,9 +126,9 @@ Deployment, release and monitoring & No clinical deployment, prospective monitor
 \end{table}
 
 \subsection{PBG landscape, roles and decision gates}
-Process-based governance assigns responsibility for identifying, assessing and treating risks throughout the lifecycle. For BrainWaveNet, the proposed governance group comprises a project sponsor, clinical safety lead, ML/data lead, data-protection and security specialist, independent ethics/fairness reviewer and autistic community representatives. The sponsor is accountable for resources and the decision to continue; the clinical lead owns clinical risk; the ML lead owns technical evidence; the data steward documents provenance and access; the independent reviewer challenges assumptions; and community representatives influence purpose, acceptable trade-offs and communication. A release board, rather than the model developer alone, should authorise any transition beyond research.
+The proposed governance group comprises a sponsor (resources and continuation), clinical safety lead (clinical risk), ML/data lead (technical evidence), data steward (provenance and access), privacy/security specialist, independent ethics/fairness reviewer and autistic community representatives. A release board should authorise any transition beyond research.
 
-Figure~\ref{fig:pbg} shows the relationship between lifecycle gates and continuous ethical review. SUM and FAST are cross-cutting criteria, while the SIA is revisited at Alpha, Alpha-to-Beta and Beta as the design and evidence change. A gate requires evidence and a recorded decision; completion of paperwork alone is not sufficient.
+Figure~\ref{fig:pbg} shows continuous SUM/FAST review and SIA checkpoints at Alpha, Alpha-to-Beta and Beta. Each gate requires reviewed evidence and a recorded decision.
 
 \begin{figure}[H]
 \centering
@@ -157,10 +157,10 @@ Figure~\ref{fig:pbg} shows the relationship between lifecycle gates and continuo
 \label{fig:pbg}
 \end{figure}
 
-Table~\ref{tab:gates} operationalises the framework. The initial Alpha review asks whether the problem should be pursued at all; Alpha-to-Beta is a controlled release decision; Beta review tests whether real-world evidence still supports continuation. If evidence is inadequate, the correct decision is to pause, redesign or stop rather than lower the threshold for approval.
+Table~\ref{tab:gates} operationalises the framework: Alpha decides whether to pursue the problem, Alpha-to-Beta governs controlled release, and Beta reassesses real-world evidence. Inadequate evidence should trigger pause, redesign or termination.
 
 \subsection{Documented gaps and corrective priorities}
-The following are the principal gaps supported by the available paper and repository evidence. They are described as missing evidence or implementation risks, not as proof of intentional misconduct.
+These source-supported gaps are missing evidence or implementation risks, not proof of intentional misconduct.
 
 \begin{itemize}
 \item \textbf{No documented autistic co-design (SUM Respect/Connect):} research aims and interpretations may not reflect community priorities. \textit{Priority:} establish accessible, paid participation before defining a new intended use.
