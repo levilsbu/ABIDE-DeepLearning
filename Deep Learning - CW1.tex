@@ -5,6 +5,8 @@
 \usepackage[a4paper,margin=2.4cm]{geometry}
 \usepackage{setspace,microtype,graphicx,booktabs,tabularx,array,longtable,enumitem,hyperref,xcolor,float,caption}
 \usepackage{tikz}
+\usepackage[backend=biber,style=authoryear,sorting=nyt,maxcitenames=2,maxbibnames=99]{biblatex}
+\addbibresource{references.bib}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
 \hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!60!black,pdftitle={Task 1 - AI Ethics Framework Implementation: BrainWaveNet},pdfauthor={Student Name}}
 \setstretch{1.12}
@@ -255,39 +257,5 @@ BrainWaveNet is a technically interesting research prototype with a clear method
 
 The proposed PBG framework addresses these gaps by embedding SUM and FAST across all five lifecycle phases, assigning accountable roles and requiring evidence at Alpha, Alpha-to-Beta and Beta review points. The project should proceed only if autistic stakeholders and clinicians agree that the use case is worthwhile, data and model limitations are documented, and independent validation demonstrates acceptable performance for the intended population. Until those conditions are met, BrainWaveNet should be restricted to research use and clearly labelled as non-diagnostic.
 
-\begin{thebibliography}{99}
-\bibitem[Abraham et al.(2017)]{abraham2017}
-Abraham, A., Milham, M.P., Di Martino, A., Craddock, R.C., Samaras, D., Thirion, B. and Varoquaux, G. (2017) 'Deriving reproducible biomarkers from multi-site resting-state data: An Autism-based example', \textit{NeuroImage}, 147, pp. 736--745. doi: 10.1016/j.neuroimage.2016.10.045.
-
-\bibitem[Albacete Rosado et al.(2024)]{albacete2024}
-Albacete Rosado, L., Verde Cagiao, M., Pinos López, M.L., Benito Ruiz, G. and Tarruell Pellegrín, A. (2024) \textit{Guidelines for participatory research on autism}. Real Patronato sobre Discapacidad / Confederación Autismo España.
-
-\bibitem[Di Martino et al.(2014)]{dimartino2014}
-Di Martino, A. et al. (2014) 'The Autism Brain Imaging Data Exchange: Towards a large-scale evaluation of the intrinsic brain architecture in autism', \textit{Molecular Psychiatry}, 19(6), pp. 659--667. doi: 10.1038/mp.2013.78.
-
-\bibitem[FDA, Health Canada and MHRA(2021)]{gmlp2021}
-U.S. Food and Drug Administration, Health Canada and Medicines and Healthcare products Regulatory Agency (2021) \textit{Good Machine Learning Practice for Medical Device Development: Guiding Principles}. Available at: \url{https://www.gov.uk/government/publications/good-machine-learning-practice-for-medical-device-development-guiding-principles} (Accessed: 3 November 2026).
-
-\bibitem[Holiga et al.(2019)]{holiga2019}
-Holiga, S. et al. (2019) 'Patients with autism spectrum disorders display reproducible functional connectivity alterations', \textit{Science Translational Medicine}, 11(481), eaat9223. doi: 10.1126/scitranslmed.aat9223.
-
-\bibitem[Jeong et al.(2024)]{jeong2024}
-Jeong, A.-Y., Heo, D.-W., Kang, E. and Suk, H.-I. (2024) 'BrainWaveNet: Wavelet-based Transformer for Autism Spectrum Disorder Diagnosis', in \textit{Medical Image Computing and Computer Assisted Intervention -- MICCAI 2024}. Lecture Notes in Computer Science, 15002, pp. 56--66. Cham: Springer. doi: 10.1007/978-3-031-72069-7\_6.
-
-\bibitem[Leslie(2019)]{leslie2019}
-Leslie, D. (2019) \textit{Understanding Artificial Intelligence Ethics and Safety: A Guide for the Responsible Design and Implementation of AI Systems in the Public Sector}. London: The Alan Turing Institute. doi: 10.5281/zenodo.3240529.
-
-\bibitem[Mitchell et al.(2019)]{mitchell2019}
-Mitchell, M. et al. (2019) 'Model Cards for Model Reporting', in \textit{Proceedings of the Conference on Fairness, Accountability, and Transparency}. New York: ACM, pp. 220--229. doi: 10.1145/3287560.3287596.
-
-\bibitem[Suresh and Guttag(2021)]{suresh2021}
-Suresh, H. and Guttag, J. (2021) 'A Framework for Understanding Sources of Harm throughout the Machine Learning Life Cycle', in \textit{Proceedings of the 1st ACM Conference on Equity and Access in Algorithms, Mechanisms, and Optimization}. doi: 10.1145/3465416.3483305.
-
-\bibitem[World Health Organization(2021)]{who2021}
-World Health Organization (2021) \textit{Ethics and Governance of Artificial Intelligence for Health: WHO Guidance}. Geneva: World Health Organization. Available at: \url{https://www.who.int/publications/i/item/9789240029200} (Accessed: 3 November 2026).
-
-\bibitem[BrainWaveNet authors(2024)]{brainwavenetcode}
-Jeong, A.-Y. et al. (2024) \textit{BrainWaveNet: Official implementation}. GitHub repository. Available at: \url{https://github.com/ku-milab/BrainWaveNet} (Accessed: 3 November 2026).
-
-\end{thebibliography}
+\printbibliography[heading=bibintoc,title={References}]
 \end{document}
