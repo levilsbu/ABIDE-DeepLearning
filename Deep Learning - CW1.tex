@@ -8,7 +8,7 @@
 \usepackage[backend=biber,style=authoryear,sorting=nyt,maxcitenames=2,maxbibnames=99]{biblatex}
 \addbibresource{references.bib}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
-\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!60!black,pdftitle={Task 1 - AI Ethics Framework Implementation: BrainWaveNet},pdfauthor={Student Name}}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!60!black,pdftitle={Responsible AI Technical Report: BrainWaveNet},pdfauthor={Levi Pedro Tejedor Rico}}
 \setstretch{1.12}
 \setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=3pt}
 \setlist[enumerate]{leftmargin=*,itemsep=3pt,topsep=3pt}
@@ -19,13 +19,17 @@
 \newcommand{\SUM}{\textsc{sum}}
 \newcommand{\FAST}{\textsc{fast}}
 
-\title{\textbf{Task 1: AI Ethics Framework Implementation}\\
+\title{\textbf{Technical Report: Responsible AI Assessment of BrainWaveNet}\\
 \large Responsible AI Assessment of BrainWaveNet for Autism Spectrum Disorder Classification}
 \author{Levi Pedro Tejedor Rico\\Student ID: 4506001}
 \date{Module: CSI\_7\_DEL -- Deep Learning}
 
 \begin{document}
 \maketitle
+
+\begin{abstract}
+This report evaluates BrainWaveNet, a wavelet-based Transformer that classifies autism spectrum disorder (ASD) and typically developing participants using resting-state functional MRI. The assessment combines the SUM values (Respect, Connect, Protect and Care), FAST principles (Fairness, Accountability, Sustainability and Transparency), and a process-based governance (PBG) approach across the AI lifecycle. BrainWaveNet is a promising research prototype evaluated on a subset of ABIDE-I, but its reported classification performance, lack of external clinical validation and limited evidence of stakeholder participation do not support clinical diagnostic use. The analysis identifies risks associated with multi-site data, sample selection, subgroup uncertainty, test-set governance, interpretability and the absence of a clinical monitoring system. It proposes governance gates, accountable roles, social impact assessment checkpoints and corrective controls. The recommendation is to retain the model for research until independent validation, autistic community participation and clinical safety governance have been demonstrated.
+\end{abstract}
 
 \tableofcontents
 \newpage
@@ -36,7 +40,26 @@ The selected technology is \textit{BrainWaveNet: Wavelet-based Transformer for A
 
 BrainWaveNet was evaluated using ABIDE-I. From 1,112 participants across 17 international sites, the authors selected 897 participants following quality-control criteria: 414 ASD participants and 483 typically developing controls (Jeong et al., 2024). ABIDE-I is a multi-site data-sharing initiative containing resting-state and anatomical MRI together with phenotypic information (Di Martino et al., 2014). BrainWaveNet is a published healthcare research prototype rather than a clinically deployed diagnostic product; the paper reports retrospective experiments and does not demonstrate routine hospital use or improved patient outcomes.
 
-\section{Assessment of the AI Technology Using SUM Values}
+\section{AI Project Background}
+\subsection{Clinical and data context}
+Autism is a heterogeneous neurodevelopmental condition. Clinical identification is based on developmental history and behavioural assessment rather than a single neuroimaging measurement. Machine learning research has explored whether brain-imaging patterns can contribute to understanding group-level differences, but group-level statistical findings do not necessarily translate into reliable individual diagnosis. Large-scale functional connectivity work has identified reproducible alterations while also highlighting the complexity and overlap of individual patterns \parencite{holiga2019}.
+
+The Autism Brain Imaging Data Exchange (ABIDE-I) is a multi-site research resource that shares structural and resting-state MRI data with phenotypic information. Its initial release included 1,112 participants from 17 sites: 539 participants with ASD and 573 TD controls, aged approximately 7--64 years \parencite{dimartino2014,abidewebsite}. The breadth of sites improves research opportunities but introduces variation in scanners, acquisition protocols, recruitment and participant characteristics. Harmonisation and site-aware evaluation are therefore important; neuroimaging studies have shown that site effects can confound machine-learning results \parencite{abraham2017,abideharmonization2022}.
+
+\subsection{BrainWaveNet method}
+\textcite{jeong2024} propose BrainWaveNet to learn spatiotemporal information from rs-fMRI in the frequency domain. The method applies a complex Morlet continuous wavelet transform (CWT) to blood-oxygen-level-dependent time series. It processes real and imaginary coefficients using residual convolutional blocks, frequency token encoding and temporal Transformer encoders, then uses spatial Transformer attention and cross-attention to learn relationships between regions of interest (ROIs). The final representation is used for binary ASD/TD classification.
+
+The authors report using CPAC-preprocessed data, a 0.01--0.1 Hz band-pass filter, no global signal regression, the Craddock 200 atlas and 78 time points per participant. CWT features are represented across five frequency sub-bands, with sampling frequency adjusted for site-specific repetition time. Of the original ABIDE-I cohort, 897 participants remained after quality control: 414 ASD and 483 TD. The reported experimental protocol uses a 7:2:1 training, validation and test split and five-fold cross-validation; model selection is based on validation AUC \parencite{jeong2024}.
+
+\subsection{Reported results and evidential limits}
+BrainWaveNet achieved a reported AUC of 0.7388, accuracy of 67.55\%, sensitivity of 66.49\% and specificity of 68.35\% (means across reported folds; standard deviations were 0.02, 2.03, 9.17 and 9.80 respectively) \parencite{jeong2024}. It achieved the highest AUC, accuracy and sensitivity among the comparison methods reported in the paper, but not the highest specificity. These are research classification results, not evidence of clinical utility, calibrated individual risk or improved patient outcomes. The study does not establish prospective performance in a clinical pathway or external validation on an independently collected cohort.
+
+The accompanying public repository improves inspectability, but a code release does not by itself guarantee reproducibility. The repository's displayed results contain small discrepancies from some values in the paper, and the implementation should be reconciled and executed from a documented clean environment before results are treated as independently replicated \parencite{brainwavenetcode}. The model's ROI analysis is also exploratory: selected regions are not automatically causal biomarkers or explanations that clinicians and autistic people can safely interpret.
+
+\section{Responsible AI Assessment}
+The following assessment consolidates the SUM values, FAST principles, lifecycle examination and governance proposal into one end-to-end evaluation. It distinguishes evidence reported by the project from controls proposed for responsible redevelopment.
+
+\subsection{Assessment using SUM values}
 
 Leslie (2019) presents SUM as values that support, underwrite and motivate responsible AI: Respect, Connect, Protect and Care. They provide a high-level test of whether a project is ethically permissible and attentive to the people and communities affected by it.
 
@@ -74,7 +97,7 @@ There is also a risk of framing autism primarily as a neurological abnormality t
 
 \textbf{Assessment: partial compliance.} The research may contribute to scientific understanding, but direct benefit to autistic people has not been demonstrated. Redevelopment should define a user-centred benefit, assess patient-relevant outcomes, communicate uncertainty and ensure that access to support is never conditional on the model's prediction.
 
-\section{Examination of Development Against FAST Principles}
+\subsection{Examination against FAST principles}
 
 \subsection{Fairness}
 Fairness must be considered in data selection, model design, outcomes and implementation. ABIDE-I contains demographic and phenotypic variables, including age, sex and clinical measures, although completeness varies across sites and participants. The BrainWaveNet paper reports overall ASD/control counts but does not provide model performance broken down by age, sex, acquisition site or clinical characteristics (Jeong et al., 2024). Consequently, the paper does not establish whether error rates are comparable across these groups.
@@ -110,7 +133,7 @@ The paper and public repository should be checked for consistency before replica
 
 \textbf{Assessment: partial compliance.} Publication and code provide a useful starting point, but transparency is incomplete for independent clinical assessment. Redevelopment should publish a model card, dataset factsheet, reproducibility package, limitations statement and plain-language explanation for clinicians and affected people.
 
-\section{Design and Explanation of a PBG Framework Landscape}
+\subsection{Process-Based Governance framework}
 
 \subsection{Purpose and governance approach}
 Leslie (2019) describes PBG as a process-based governance framework that embeds ethical values and principles into the workflow rather than treating ethics as a one-off review. For BrainWaveNet, PBG should operationalise SUM and FAST at every stage and provide evidence that the project remains justified. The framework below is a proposed redevelopment approach, not a claim that these controls already exist in BrainWaveNet.
@@ -183,7 +206,7 @@ Deployment and release & Clinical safety case; human-factors assessment; user tr
 \bottomrule
 \end{longtable}
 
-\section{End-to-End Assessment Across the Development Lifecycle}
+\subsection{End-to-end assessment across the development lifecycle}
 
 \subsection{Problem formulation}
 The research problem is to classify ASD and typically developing control participants from resting-state fMRI using temporal and spatial information in BOLD signals (Jeong et al., 2024). The research question is identifiable, but the paper does not fully establish a clinical need, intended user, target care pathway or measurable patient benefit. It does not explain why an MRI-based classifier would improve on existing multidisciplinary assessment.
@@ -229,7 +252,7 @@ The available BrainWaveNet paper reports research experiments and code publicati
 
 A future release should be limited to a controlled research or clinical decision-support pilot only after independent validation and appropriate regulatory and institutional review. The model must not issue an autonomous diagnosis or determine access to support. Clinicians should retain decision authority, understand limitations and be able to disregard the output. Users and affected people should receive clear information about purpose, uncertainty and limitations. Monitoring should track data drift, site changes, error rates, subgroup performance, automation bias, complaints and adverse events. A documented rollback and retirement process is necessary. WHO (2021) and the joint GMLP principles for medical-device machine learning emphasise lifecycle governance, representative data, human-AI team performance and real-world monitoring (FDA, Health Canada and MHRA, 2021).
 
-\section{Examples of Non-Compliance, Risks and Corrective Actions}
+\subsection{Examples of non-compliance, risks and corrective actions}
 
 Table~\ref{tab:gaps} consolidates the main examples. The distinction between confirmed reporting gaps and potential harms is retained to avoid unsupported claims.
 
@@ -257,6 +280,5 @@ BrainWaveNet is a technically interesting research prototype with a clear method
 
 The proposed PBG framework addresses these gaps by embedding SUM and FAST across all five lifecycle phases, assigning accountable roles and requiring evidence at Alpha, Alpha-to-Beta and Beta review points. The project should proceed only if autistic stakeholders and clinicians agree that the use case is worthwhile, data and model limitations are documented, and independent validation demonstrates acceptable performance for the intended population. Until those conditions are met, BrainWaveNet should be restricted to research use and clearly labelled as non-diagnostic.
 
-\nocite{*}
 \printbibliography[heading=bibintoc,title={References}]
 \end{document}
