@@ -149,8 +149,11 @@ Figure~\ref{fig:pbg} shows continuous SUM/FAST review and SIA checkpoints at Alp
 \draw[gate] (m) -- (r);
 \node[band,below=0.55cm of x] (sf) {Continuous assessment: SUM values + FAST principles + risk register + independent review};
 \node[band,below=0.35cm of sf,fill=orange!10] (sia) {Social Impact Assessment checkpoints: Alpha $\rightarrow$ Alpha-to-Beta $\rightarrow$ Beta};
-\draw[gate] (p.south) -- ++(0,-0.35) -| (sf.west);
-\draw[gate] (r.south) -- ++(0,-0.35) -| (sf.east);
+\draw[gate] (p.south) -- (p.south |- sf.north);
+\draw[gate] (d.south) -- (d.south |- sf.north);
+\draw[gate] (x.south) -- (x.south |- sf.north);
+\draw[gate] (m.south) -- (m.south |- sf.north);
+\draw[gate] (r.south) -- (r.south |- sf.north);
 \draw[gate] (sf) -- (sia);
 \end{tikzpicture}
 \caption{Proposed PBG structure for BrainWaveNet. Ethical review is continuous, with formal SIA checkpoints at key lifecycle transitions.}
