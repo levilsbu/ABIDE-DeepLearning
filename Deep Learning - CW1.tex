@@ -7,6 +7,8 @@
 \usepackage{tikz}
 \usepackage[backend=biber,style=authoryear,sorting=nyt,maxcitenames=2,maxbibnames=99]{biblatex}
 \addbibresource{references.bib}
+% Make \u005ccite produce Harvard-style parenthetical citations.
+\let\cite\parencite
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
 \hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!60!black,pdftitle={Responsible AI Technical Report: BrainWaveNet},pdfauthor={Levi Pedro Tejedor Rico}}
 \setstretch{1.12}
