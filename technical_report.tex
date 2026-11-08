@@ -64,7 +64,7 @@ The system boundary therefore extends beyond the neural network itself. It inclu
 \section{Responsible AI Assessment}
 
 \subsection{SUM values}
-Leslie (2019) defines the SUM Values---Respect, Connect, Care and Protect---as ethical principles that guide responsible AI development throughout its lifecycle \cite{leslie2019}.
+Leslie's SUM values---Respect, Connect, Protect and Care---provide ethical direction throughout the AI lifecycle \cite{leslie2019}. They are complementary rather than interchangeable: Respect concerns autonomy and dignity; Connect requires inclusive participation; Protect addresses avoidable harm; and Care concerns wellbeing.
 
 \begin{table}[H]
 \centering
@@ -73,20 +73,20 @@ Leslie (2019) defines the SUM Values---Respect, Connect, Care and Protect---as e
 \toprule
 \textbf{Value} & \textbf{Evidence and assessment} & \textbf{Required response}\\
 \midrule
-Respect & Di Martino et al. (2014) report that all contributing studies had local IRB approval and that data were anonymised before sharing, including the removal of HIPAA identifiers and facial information. However, the paper does not detail the scope of individual consent or the specific conditions governing secondary data use. & Verify that secondary use complies with the original consent conditions and applicable data-use agreements. Maintain strict access controls, protect confidentiality and prevent re-identification. Ensure that any further use respects participants' rights and the approved research purposes.\\
-Connect & The paper does not report whether autistic people were involved in project decisions or whether their perspectives informed the research. It also does not specify how neurodiversity is represented in its communication. These aspects therefore remain unclear rather than indicating demonstrated shortcomings. & Involve autistic people in decisions through accessible and fairly compensated participation. Use language that respects neurodiversity.\\
-Protect & ABIDE-I is predominantly male; Di Martino et al. (2014) report that 25\% of sites excluded females by design. The cohort should not be assumed to represent all autistic people (\cite{dimartino2014}). & Document recruitment and exclusions, explain the limits of generalisation and avoid presenting this sample as representative of the wider population.\\
-Care & The study reports retrospective metrics, not improved wellbeing or patient-relevant outcomes. Inappropriate use of false classifications could cause distress, stigma, unnecessary investigations or delayed support. & Restrict use to research until benefit and safety are demonstrated. Assess plausible harms in context and ensure predictions never determine access to support (\cite{topol2019,who2021}).\\
+Respect & ABIDE-I reports local IRB approval or waiver and anonymisation before sharing, including removal of HIPAA identifiers and facial information. The paper does not specify individual consent scope or all secondary-use conditions. & Verify consent conditions and data-use agreements; restrict access, protect confidentiality and prevent re-identification.\\
+Connect & The paper does not report autistic participation in project decisions. This is an evidence gap, not proof that consultation did not occur. & Involve autistic people in setting priorities, reviewing proposed uses and communicating results; make participation accessible and fairly compensated.\\
+Protect & ABIDE-I is predominantly male; 25\% of sites excluded females by design \cite{dimartino2014}. Representativeness across the autistic population is therefore limited. & Document recruitment and exclusions; test subgroup performance and avoid claims of population-wide generalisability.\\
+Care & Retrospective classification metrics do not demonstrate improved wellbeing. Misclassification could cause distress, stigma, unnecessary investigation or delayed support. & Keep the model research-only; assess harms and ensure outputs never determine access to support \cite{topol2019,who2021}.\\
 \bottomrule
 \end{tabularx}
 \caption{Assessment of BrainWaveNet against SUM values.}
 \label{tab:sum}
 \end{table}
 
-These values should not be treated as interchangeable checklist items. Respect concerns participants' autonomy and the conditions under which their data may be reused; Connect requires ongoing influence over decisions, rather than consultation after the technical design is fixed. Protect and Care also address different questions: Protect asks whether people are exposed to avoidable harm, while Care asks whether the project actively supports wellbeing. For BrainWaveNet, this distinction matters because a model could satisfy data-security requirements yet still cause harm if its group-level output were presented as an individual diagnosis. Conversely, a technically accurate classifier would not establish that its use is respectful or beneficial. Governance must therefore assess both the means of development and the consequences of use.
+These values expose a key distinction: data protection alone would not make the system respectful or caring. Even a secure classifier could cause harm if a group-level research prediction were treated as an individual diagnosis. Ethical acceptability therefore depends on purpose, participation and consequences, as well as technical safeguards.
 
 \subsection{FAST principles}
-FAST assesses operational properties and governance mechanisms across the AI lifecycle. In Leslie's framework, accountability and transparency are end-to-end governance principles, while fairness and sustainability concern qualities of the system and its wider impacts (Table~\ref{tab:fast}; \cite{leslie2019}).
+FAST translates ethical aims into operational requirements. In Leslie's framework, accountability and transparency apply throughout governance, while fairness and sustainability address system properties and wider impacts \cite{leslie2019}.
 
 \begin{table}[H]
 \centering
@@ -95,40 +95,36 @@ FAST assesses operational properties and governance mechanisms across the AI lif
 \toprule
 \textbf{Principle} & \textbf{Evidence gap or risk} & \textbf{Required control}\\
 \midrule
-Fairness & Reported metrics are aggregate; subgroup performance by age, sex, site or clinical group is not reported (\cite{jeong2024}). The binary target also needs justification for a heterogeneous condition, and responsible use would require trained users. & Maintain a dataset factsheet; justify target and design choices; evaluate subgroup errors and calibration with uncertainty; and specify user training. This addresses data, design, outcome and implementation fairness (\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}).\\
-Accountability & No clinical owner, release authority or incident process is identified. Code inspection shows test metrics logged each epoch while checkpoint selection uses validation AUC: this risks human exposure to repeated test feedback but does not prove it influenced selection or caused leakage. & Assign human owners, keep a process log and restrict final test access until development is complete. Record who may approve, pause or withdraw the system, and define pre-release and remedial accountability (\cite{leslie2019,raji2020,who2021,gmlp2021}).\\
-Sustainability & Energy, hardware and maintenance requirements are unreported, and no assessment establishes whether expected value justifies long-term institutional and social costs. & Use SIA checkpoints to assess long-term impacts, stakeholder benefits and burdens, computational needs and institutional capacity; reassess if intended use changes (\cite{leslie2019,who2021}).\\
-Transparency & The paper describes the method and code is public, but paper--README inconsistencies remain unresolved. Accessible explanations of purpose, outputs and limitations are not established. & Version the development record, reconcile results and explain intended purpose, output meaning, uncertainty and limitations to non-specialists. State that outputs are research classifications, not diagnoses; provide a model card (\cite{leslie2019,mitchell2019,who2021,gmlp2021}).\\
+Fairness & Results are aggregate; subgroup performance by age, sex, site or clinical group is not reported. A binary target may also oversimplify a heterogeneous condition \cite{jeong2024}. & Justify the target and design; report subgroup errors, calibration and uncertainty where sample sizes permit; document limitations and user training \cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}.\\
+Accountability & No clinical owner, release authority or incident process is identified. Code logs test metrics each epoch while selecting checkpoints by validation AUC. This risks repeated human exposure to test feedback but does not prove leakage or test-guided selection. & Assign named human owners; log decisions; restrict final test access until development is complete; define who can approve, pause or withdraw the model \cite{raji2020,who2021,gmlp2021}.\\
+Sustainability & Energy, hardware and maintenance requirements, and the balance of long-term costs and benefits, are unreported. & Use SIA reviews to assess computational demands, institutional capacity and effects on affected communities; revisit these if the intended use changes \cite{leslie2019,who2021}.\\
+Transparency & The method and code are public, but paper--README metric discrepancies remain unresolved. Accessible explanations of purpose and limitations are not established. & Reconcile results; version the pipeline; publish a model card explaining intended use, outputs, uncertainty and limitations. State clearly that outputs are research classifications, not diagnoses \cite{mitchell2019,who2021,gmlp2021}.\\
 \bottomrule
 \end{tabularx}
 \caption{Assessment against FAST principles.}
 \label{tab:fast}
 \end{table}
 
-The FAST principles also interact and may create practical tensions. For example, subgroup reporting can improve fairness and transparency, but small or sensitive groups may increase re-identification risks; the data steward and privacy specialist should determine what can be reported safely. Similarly, stronger validation and monitoring can improve accountability but require additional computation, staff time and institutional resources, which should be considered under sustainability. Transparency should not mean publishing sensitive participant-level data or exposing security controls. Instead, the project should make methods, limitations, decisions and responsibilities inspectable while protecting confidential information. These trade-offs should be documented in the risk register and revisited at each SIA gate, rather than resolved once at the start.
+FAST principles can conflict in practice. Subgroup reporting may support fairness but create privacy risks for small groups; transparency must therefore expose methods and decisions without disclosing participant-level data. More validation and monitoring strengthen accountability but require resources, which should be assessed under sustainability. The project should record these trade-offs in its risk register and reconsider them at each SIA gate.
 
 \subsection{PBG landscape, roles and decision gates}
-The governance group should include a project sponsor, clinical safety lead, ML/data lead, data steward, privacy/security specialist, independent validation reviewer and autistic representatives. The sponsor owns purpose and resources; the ML/data lead owns technical records; the data steward documents provenance and quality; the privacy specialist reviews access; the independent reviewer challenges validation; and the clinical safety lead owns the safety case and monitoring. Autistic representatives help shape priorities and review proposed uses. A release board records approval, rejection or deferral at each gate.
-
-The PBG landscape links five lifecycle phases, accountable governance roles and continuous SUM/FAST controls. Its evidence includes a risk register, process log, dataset factsheet and model card. Figure~\ref{fig:pbg} shows SIA checkpoints at Alpha, Alpha-to-Beta and Beta.
-
-The table below maps each lifecycle phase to the evidence available and the proposed safeguards, identifying the accountable lead at each stage.
+The proposed process-based governance (PBG) framework assigns responsibility across five lifecycle phases. The sponsor owns purpose and resources; the ML/data lead maintains technical records; the data steward documents provenance and quality; the privacy/security specialist reviews access; an independent reviewer challenges validation; and the clinical safety lead owns the safety case and monitoring. Autistic representatives contribute to priorities and proposed-use reviews. A release board records decisions and outstanding risks.
 
 \begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{p{2.5cm}Y Y}
 \toprule
-\textbf{Lifecycle phase} & \textbf{Assessment of current evidence} & \textbf{Proposed control and accountable lead}\\
+\textbf{Lifecycle phase} & \textbf{Current evidence and gap} & \textbf{Control and accountable lead}\\
 \midrule
-Problem formulation & The ASD/typically developing research objective is specified, but no clinical user, care pathway or patient-relevant benefit is established; the need and alternatives are not justified. & Sponsor and autistic advisory group define purpose, stakeholders, alternatives and prohibited uses; record the rationale and complete the initial SIA and risk register before further development (Alpha).\\
-Data extraction and acquisition & ABIDE-I provides multi-site rs-fMRI and phenotype data; lineage, quality and site-level acquisition differences need documentation. & Data steward maintains a dataset factsheet covering provenance, permissions, quality, missingness and exclusions. Privacy specialist verifies access and reuse conditions before processing.\\
-Data preprocessing & CPAC, filtering, parcellation, cropping and CWT are described, but sensitivity to processing choices is not independently established. & ML/data lead versions the pipeline, records QC and tests sensitivity to motion, site, cropping, harmonisation and exclusion thresholds.\\
-Modelling, testing and validation & Internal metrics are reported, but external clinical validation and subgroup performance are not demonstrated. Test metrics are logged during training, although leakage or use in model selection is not established. & Independent reviewer freezes the protocol and test set, restricts access during development, and reports discrimination, calibration, uncertainty and subgroup results. Require site-held-out and external validation before release consideration (Alpha-to-Beta).\\
-Deployment, monitoring and release & No clinical deployment, prospective monitoring or safety process is evidenced; BrainWaveNet remains a research prototype. & Clinical safety lead and release board prohibit diagnostic use without a safety case, approvals, user training and human oversight. If ever deployed, monitor drift and incidents, provide pause/rollback procedures and reassess the SIA (Beta).\\
+Problem formulation & The ASD/control research objective is specified, but no clinical user, care pathway or patient-relevant benefit is established. & Sponsor and autistic advisory group justify the purpose, consider alternatives and prohibited uses, and complete an initial SIA and risk register (Alpha).\\
+Data acquisition & ABIDE-I provides multi-site rs-fMRI and phenotype data; site differences and reuse conditions require documentation. & Data steward records provenance, permissions, quality, missingness and exclusions; privacy specialist verifies access and reuse conditions.\\
+Preprocessing & CPAC, filtering, parcellation, cropping and CWT are described; sensitivity to these choices is not independently established. & ML/data lead versions the pipeline and tests sensitivity to motion, site, cropping, harmonisation and exclusion thresholds.\\
+Modelling and validation & Internal metrics are reported, but subgroup performance and external clinical validation are not demonstrated. Test metrics are logged during training, although leakage is not established. & Independent reviewer freezes the protocol and test set, then assesses discrimination, calibration, uncertainty and subgroup results. Require site-held-out and external validation before release consideration (Alpha-to-Beta).\\
+Deployment and monitoring & No clinical deployment, prospective monitoring or safety process is evidenced; the model remains a research prototype. & Clinical safety lead and board prohibit diagnostic use without a safety case, approvals, training and human oversight. Any future use requires drift/incident monitoring, pause and rollback procedures, and SIA review (Beta).\\
 \bottomrule
 \end{tabularx}
-\caption{Lifecycle phases, evidence gaps and proportionate controls within the PBG framework.}
+\caption{Lifecycle phases, evidence gaps and proportionate PBG controls.}
 \label{tab:lifecycle}
 \end{table}
 
@@ -149,8 +145,8 @@ Deployment, monitoring and release & No clinical deployment, prospective monitor
 \draw[gate] (d) -- (x);
 \draw[gate] (x) -- (m);
 \draw[gate] (m) -- (r);
-\node[band,below=0.9cm of x] (sf) {Continuous controls: SUM + FAST + risk register + audit/process log + independent review};
-\node[band,below=0.35cm of sf,fill=orange!10] (sia) {Social Impact Assessment checkpoints: Alpha $\rightarrow$ Alpha-to-Beta $\rightarrow$ Beta};
+\node[band,below=0.9cm of x] (sf) {Continuous controls: SUM + FAST + risk register + process log + independent review};
+\node[band,below=0.35cm of sf,fill=orange!10] (sia) {SIA checkpoints: Alpha $\rightarrow$ Alpha-to-Beta $\rightarrow$ Beta};
 \draw[gate] (p.south) -- (p.south |- sf.north);
 \draw[gate] (d.south) -- (d.south |- sf.north);
 \draw[gate] (x.south) -- (x.south |- sf.north);
@@ -158,11 +154,11 @@ Deployment, monitoring and release & No clinical deployment, prospective monitor
 \draw[gate] (r.south) -- (r.south |- sf.north);
 \draw[gate] (sf) -- (sia);
 \end{tikzpicture}
-\caption{Proposed PBG structure for BrainWaveNet. Ethical review is continuous, with formal SIA checkpoints at key lifecycle transitions.}
+\caption{Proposed PBG structure. Ethical review is continuous, with SIA checkpoints at lifecycle transitions.}
 \label{fig:pbg}
 \end{figure}
 
-At Alpha, the sponsor records purpose, stakeholders, alternatives, prohibited uses and the initial SIA; development proceeds only if a defensible need and ethical permissibility are established. At Alpha-to-Beta, after model validation, the team updates the SIA, completes independent review, confirms training and safety controls, and submits evidence to the release board. At Beta, a future conditional stage for BrainWaveNet, the team reassesses real-world impacts, stakeholder feedback and incidents, and may mitigate, pause or withdraw the system. Every gate records its decision, approver and outstanding risks. This follows Leslie's SIA lifecycle guidance (\cite{leslie2019}).
+At Alpha, the sponsor assesses purpose, stakeholders, alternatives and ethical permissibility. At Alpha-to-Beta, after validation, the team revisits the SIA, completes independent review and confirms safety controls before the release board decides. Beta is conditional on future authorised use: the team would review real-world impacts, stakeholder feedback and incidents, and mitigate, pause or withdraw as necessary. Each gate records its decision, approver and outstanding risks, following Leslie's SIA lifecycle guidance \cite{leslie2019}.
 
 \section{Conclusion}
 BrainWaveNet remains a research prototype: its ABIDE-I results do not justify clinical diagnosis or autonomous decision-making. The reviewed material does not establish autistic co-design, subgroup performance, independent external clinical validation, complete reproducibility or operational monitoring. These are evidence gaps, not proof that harm has occurred.
