@@ -64,7 +64,7 @@ The system boundary therefore extends beyond the neural network itself. It inclu
 \section{Responsible AI Assessment}
 
 \subsection{SUM values}
-Leslie's SUM values---Respect, Connect, Protect and Care---provide ethical direction throughout the AI lifecycle \cite{leslie2019}. They are complementary rather than interchangeable: Respect concerns autonomy and dignity; Connect requires inclusive participation; Protect addresses avoidable harm; and Care concerns wellbeing.
+Leslie's SUM values---Respect, Connect, Protect and Care---provide ethical direction throughout the AI lifecycle (\cite{leslie2019}). They are complementary rather than interchangeable: Respect concerns autonomy and dignity; Connect requires inclusive participation; Protect addresses avoidable harm; and Care concerns wellbeing.
 
 \begin{table}[H]
 \centering
@@ -75,8 +75,8 @@ Leslie's SUM values---Respect, Connect, Protect and Care---provide ethical direc
 \midrule
 Respect & ABIDE-I reports local IRB approval or waiver and anonymisation before sharing, including removal of HIPAA identifiers and facial information. The paper does not specify individual consent scope or all secondary-use conditions. & Verify consent conditions and data-use agreements; restrict access, protect confidentiality and prevent re-identification.\\
 Connect & The paper does not report autistic participation in project decisions. This is an evidence gap, not proof that consultation did not occur. & Involve autistic people in setting priorities, reviewing proposed uses and communicating results; make participation accessible and fairly compensated.\\
-Protect & ABIDE-I is predominantly male; 25\% of sites excluded females by design \cite{dimartino2014}. Representativeness across the autistic population is therefore limited. & Document recruitment and exclusions; test subgroup performance and avoid claims of population-wide generalisability.\\
-Care & Retrospective classification metrics do not demonstrate improved wellbeing. Misclassification could cause distress, stigma, unnecessary investigation or delayed support. & Keep the model research-only; assess harms and ensure outputs never determine access to support \cite{topol2019,who2021}.\\
+Protect & ABIDE-I is predominantly male; 25\% of sites excluded females by design (\cite{dimartino2014}). Representativeness across the autistic population is therefore limited. & Document recruitment and exclusions; test subgroup performance and avoid claims of population-wide generalisability.\\
+Care & Retrospective classification metrics do not demonstrate improved wellbeing. Misclassification could cause distress, stigma, unnecessary investigation or delayed support. & Keep the model research-only; assess harms and ensure outputs never determine access to support (\cite{topol2019,who2021}).\\
 \bottomrule
 \end{tabularx}
 \caption{Assessment of BrainWaveNet against SUM values.}
@@ -86,7 +86,7 @@ Care & Retrospective classification metrics do not demonstrate improved wellbein
 These values expose a key distinction: data protection alone would not make the system respectful or caring. Even a secure classifier could cause harm if a group-level research prediction were treated as an individual diagnosis. Ethical acceptability therefore depends on purpose, participation and consequences, as well as technical safeguards.
 
 \subsection{FAST principles}
-FAST translates ethical aims into operational requirements. In Leslie's framework, accountability and transparency apply throughout governance, while fairness and sustainability address system properties and wider impacts \cite{leslie2019}.
+FAST translates ethical aims into operational requirements. In Leslie's framework, accountability and transparency apply throughout governance, while fairness and sustainability address system properties and wider impacts (\cite{leslie2019}).
 
 \begin{table}[H]
 \centering
@@ -95,10 +95,10 @@ FAST translates ethical aims into operational requirements. In Leslie's framewor
 \toprule
 \textbf{Principle} & \textbf{Evidence gap or risk} & \textbf{Required control}\\
 \midrule
-Fairness & Results are aggregate; subgroup performance by age, sex, site or clinical group is not reported. A binary target may also oversimplify a heterogeneous condition \cite{jeong2024}. & Justify the target and design; report subgroup errors, calibration and uncertainty where sample sizes permit; document limitations and user training \cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}.\\
-Accountability & No clinical owner, release authority or incident process is identified. Code logs test metrics each epoch while selecting checkpoints by validation AUC. This risks repeated human exposure to test feedback but does not prove leakage or test-guided selection. & Assign named human owners; log decisions; restrict final test access until development is complete; define who can approve, pause or withdraw the model \cite{raji2020,who2021,gmlp2021}.\\
-Sustainability & Energy, hardware and maintenance requirements, and the balance of long-term costs and benefits, are unreported. & Use SIA reviews to assess computational demands, institutional capacity and effects on affected communities; revisit these if the intended use changes \cite{leslie2019,who2021}.\\
-Transparency & The method and code are public, but paper--README metric discrepancies remain unresolved. Accessible explanations of purpose and limitations are not established. & Reconcile results; version the pipeline; publish a model card explaining intended use, outputs, uncertainty and limitations. State clearly that outputs are research classifications, not diagnoses \cite{mitchell2019,who2021,gmlp2021}.\\
+Fairness & Results are aggregate; subgroup performance by age, sex, site or clinical group is not reported. A binary target may also oversimplify a heterogeneous condition (\cite{jeong2024}). & Justify the target and design; report subgroup errors, calibration and uncertainty where sample sizes permit; document limitations and user training (\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}).\\
+Accountability & No clinical owner, release authority or incident process is identified. Code logs test metrics each epoch while selecting checkpoints by validation AUC. This risks repeated human exposure to test feedback but does not prove leakage or test-guided selection. & Assign named human owners; log decisions; restrict final test access until development is complete; define who can approve, pause or withdraw the model (\cite{raji2020,who2021,gmlp2021}).\\
+Sustainability & Energy, hardware and maintenance requirements, and the balance of long-term costs and benefits, are unreported. & Use SIA reviews to assess computational demands, institutional capacity and effects on affected communities; revisit these if the intended use changes (\cite{leslie2019,who2021}).\\
+Transparency & The method and code are public, but paper--README metric discrepancies remain unresolved. Accessible explanations of purpose and limitations are not established. & Reconcile results; version the pipeline; publish a model card explaining intended use, outputs, uncertainty and limitations. State clearly that outputs are research classifications, not diagnoses (\cite{mitchell2019,who2021,gmlp2021}).\\
 \bottomrule
 \end{tabularx}
 \caption{Assessment against FAST principles.}
@@ -160,7 +160,7 @@ Deployment and monitoring & No clinical deployment, prospective monitoring or sa
 \label{fig:pbg}
 \end{figure}
 
-At Alpha, the sponsor assesses purpose, stakeholders, alternatives and ethical permissibility. At Alpha-to-Beta, after validation, the team revisits the SIA, completes independent review and confirms safety controls before the release board decides. Beta is conditional on future authorised use: the team would review real-world impacts, stakeholder feedback and incidents, and mitigate, pause or withdraw as necessary. Each gate records its decision, approver and outstanding risks, following Leslie's SIA lifecycle guidance \cite{leslie2019}.
+At Alpha, the sponsor assesses purpose, stakeholders, alternatives and ethical permissibility. At Alpha-to-Beta, after validation, the team revisits the SIA, completes independent review and confirms safety controls before the release board decides. Beta is conditional on future authorised use: the team would review real-world impacts, stakeholder feedback and incidents, and mitigate, pause or withdraw as necessary. Each gate records its decision, approver and outstanding risks, following Leslie's SIA lifecycle guidance (\cite{leslie2019}).
 
 \section{Conclusion}
 BrainWaveNet remains a research prototype: its ABIDE-I results do not justify clinical diagnosis or autonomous decision-making. The reviewed material does not establish autistic co-design, subgroup performance, independent external clinical validation, complete reproducibility or operational monitoring. These are evidence gaps, not proof that harm has occurred. The binary target also limits what the model can represent about individual autistic people; future research could examine validated measures of specific characteristics, but not a single numerical ``degree of autism''. Such outputs would still require clinical interpretation and must not replace the person's voice or professional assessment.
