@@ -83,6 +83,8 @@ Care & The study reports retrospective metrics, not improved wellbeing or patien
 \label{tab:sum}
 \end{table}
 
+These values should not be treated as interchangeable checklist items. Respect concerns participants' autonomy and the conditions under which their data may be reused; Connect requires ongoing influence over decisions, rather than consultation after the technical design is fixed. Protect and Care also address different questions: Protect asks whether people are exposed to avoidable harm, while Care asks whether the project actively supports wellbeing. For BrainWaveNet, this distinction matters because a model could satisfy data-security requirements yet still cause harm if its group-level output were presented as an individual diagnosis. Conversely, a technically accurate classifier would not establish that its use is respectful or beneficial. Governance must therefore assess both the means of development and the consequences of use.
+
 \subsection{FAST principles}
 FAST assesses operational properties and governance mechanisms across the AI lifecycle. In Leslie's framework, accountability and transparency are end-to-end governance principles, while fairness and sustainability concern qualities of the system and its wider impacts (Table~\ref{tab:fast}; \cite{leslie2019}).
 
@@ -103,6 +105,7 @@ Transparency & The paper describes the method and code is public, but paper--REA
 \label{tab:fast}
 \end{table}
 
+The FAST principles also interact and may create practical tensions. For example, subgroup reporting can improve fairness and transparency, but small or sensitive groups may increase re-identification risks; the data steward and privacy specialist should determine what can be reported safely. Similarly, stronger validation and monitoring can improve accountability but require additional computation, staff time and institutional resources, which should be considered under sustainability. Transparency should not mean publishing sensitive participant-level data or exposing security controls. Instead, the project should make methods, limitations, decisions and responsibilities inspectable while protecting confidential information. These trade-offs should be documented in the risk register and revisited at each SIA gate, rather than resolved once at the start.
 
 \subsection{PBG landscape, roles and decision gates}
 The governance group should include a project sponsor, clinical safety lead, ML/data lead, data steward, privacy/security specialist, independent validation reviewer and autistic representatives. The sponsor owns purpose and resources; the ML/data lead owns technical records; the data steward documents provenance and quality; the privacy specialist reviews access; the independent reviewer challenges validation; and the clinical safety lead owns the safety case and monitoring. Autistic representatives help shape priorities and review proposed uses. A release board records approval, rejection or deferral at each gate.
