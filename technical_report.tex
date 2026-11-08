@@ -104,8 +104,12 @@ Transparency & The paper describes the method and code is public, but paper--REA
 \end{table}
 
 
-\subsection{Lifecycle assessment and controls}
-Table~\ref{tab:lifecycle} links lifecycle phases to evidence and safeguards.
+\subsection{PBG landscape, roles and decision gates}
+The governance group should include a project sponsor, clinical safety lead, ML/data lead, data steward, privacy/security specialist, independent validation reviewer and autistic representatives. The sponsor owns purpose and resources; the ML/data lead owns technical records; the data steward documents provenance and quality; the privacy specialist reviews access; the independent reviewer challenges validation; and the clinical safety lead owns the safety case and monitoring. Autistic representatives help shape priorities and review proposed uses. A release board records approval, rejection or deferral at each gate.
+
+The PBG landscape links five lifecycle phases, accountable governance roles and continuous SUM/FAST controls. Its evidence includes a risk register, process log, dataset factsheet and model card. Figure~\ref{fig:pbg} shows SIA checkpoints at Alpha, Alpha-to-Beta and Beta.
+
+The table below maps each lifecycle phase to the evidence available and the proposed safeguards, identifying the accountable lead at each stage.
 
 \begin{table}[H]
 \centering
@@ -121,14 +125,9 @@ Modelling, testing and validation & Internal metrics are reported, but external 
 Deployment, monitoring and release & No clinical deployment, prospective monitoring or safety process is evidenced; BrainWaveNet remains a research prototype. & Clinical safety lead and release board prohibit diagnostic use without a safety case, approvals, user training and human oversight. If ever deployed, monitor drift and incidents, provide pause/rollback procedures and reassess the SIA (Beta).\\
 \bottomrule
 \end{tabularx}
-\caption{Lifecycle assessment: evidence gaps and proportionate controls.}
+\caption{Lifecycle phases, evidence gaps and proportionate controls within the PBG framework.}
 \label{tab:lifecycle}
 \end{table}
-
-\subsection{PBG landscape, roles and decision gates}
-The governance group should include a project sponsor, clinical safety lead, ML/data lead, data steward, privacy/security specialist, independent validation reviewer and autistic representatives. The sponsor owns purpose and resources; the ML/data lead owns technical records; the data steward documents provenance and quality; the privacy specialist reviews access; the independent reviewer challenges validation; and the clinical safety lead owns the safety case and monitoring. Autistic representatives help shape priorities and review proposed uses. A release board records approval, rejection or deferral at each gate.
-
-The PBG landscape links five lifecycle phases, accountable governance roles and continuous SUM/FAST controls. Its evidence includes a risk register, process log, dataset factsheet and model card. Figure~\ref{fig:pbg} shows SIA checkpoints at Alpha, Alpha-to-Beta and Beta.
 
 \begin{figure}[H]
 \centering
