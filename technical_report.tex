@@ -129,7 +129,7 @@ Deployment, monitoring and release & No clinical deployment, prospective monitor
 \subsection{PBG landscape, roles and decision gates}
 The governance group should include a project sponsor, clinical safety lead, ML/data lead, data steward, privacy/security specialist, independent validation reviewer and autistic representatives. Responsibilities should be explicit: the sponsor owns the project purpose and resources; the ML/data lead owns technical development and records; the data steward maintains provenance and data-quality documentation; the privacy/security specialist reviews access and security; the independent reviewer challenges validation evidence; and the clinical safety lead owns the safety case and post-release monitoring. Autistic representatives should be supported to shape priorities and review proposed uses. A release board, separate from the development team where practicable, records approval, rejection or deferral at each gate.
 
-Figure~\ref{fig:pbg} shows continuous SUM/FAST review and SIA checkpoints at Alpha, Alpha-to-Beta and Beta; each gate requires reviewed evidence and a recorded decision.
+The PBG landscape has three connected layers: the five lifecycle phases through which the system moves; the governance roles that own decisions and evidence; and continuous SUM/FAST controls supported by a risk register, process log, dataset factsheet and model card. Figure~\ref{fig:pbg} shows how these layers interact, with SIA checkpoints at Alpha, Alpha-to-Beta and Beta.
 
 \begin{figure}[H]
 \centering
@@ -140,15 +140,15 @@ Figure~\ref{fig:pbg} shows continuous SUM/FAST review and SIA checkpoints at Alp
     band/.style={draw,rounded corners,align=center,fill=green!7,text width=12.2cm,minimum height=0.62cm,font=\small}
 ]
 \node[stage] (p) {Problem\\ formulation};
-\node[stage,right=of p] (d) {Data acquisition\\ and access};
+\node[stage,right=of p] (d) {Data extraction\\ and acquisition};
 \node[stage,right=of d] (x) {Preprocessing};
-\node[stage,right=of x] (m) {Modelling and\\ validation};
-\node[stage,right=of m] (r) {Release and\\ monitoring};
+\node[stage,right=of x] (m) {Modelling, testing\\ and validation};
+\node[stage,right=of m] (r) {Deployment, monitoring\\ and release};
 \draw[gate] (p) -- (d);
 \draw[gate] (d) -- (x);
 \draw[gate] (x) -- (m);
 \draw[gate] (m) -- (r);
-\node[band,below=0.55cm of x] (sf) {Continuous assessment: SUM values + FAST principles + risk register + independent review};
+\node[band,below=0.55cm of x] (sf) {Continuous controls: SUM + FAST + risk register + audit/process log + independent review};
 \node[band,below=0.35cm of sf,fill=orange!10] (sia) {Social Impact Assessment checkpoints: Alpha $\rightarrow$ Alpha-to-Beta $\rightarrow$ Beta};
 \draw[gate] (p.south) -- (p.south |- sf.north);
 \draw[gate] (d.south) -- (d.south |- sf.north);
