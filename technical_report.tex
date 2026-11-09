@@ -142,6 +142,32 @@ Six quality-control fields are missing for 13 participants (10 ASD; 3 controls).
 
 A static review of the authors' public implementation identifies further reproducibility concerns. The paper reports batch size 32, learning rate $3\times10^{-5}$ and temporal embedding dimension 16, whereas the checked-in configuration specifies 64, $5\times10^{-5}$ and 32 respectively. This may reflect an undocumented version difference; the published metrics cannot be tied confidently to the current configuration. In \texttt{main.py}, five \texttt{StratifiedShuffleSplit} iterations create potentially overlapping validation subsets rather than five mutually exclusive folds. In \texttt{training.py}, the same test set is evaluated and logged at every epoch, despite checkpoint selection using validation AUC. This exposes test feedback and is not evidence that the authors selected the model on test results. The configured pickle inputs and upstream preprocessing outputs are not included in the repository, limiting end-to-end reproduction. The \\texttt{ComplexLinear} module also applies separate real and imaginary linear maps rather than full complex multiplication, a distinction that should be explicit when describing the architecture. The training import \texttt{utils.metric} also does not match the tracked \texttt{utils/metic.py}; a clean checkout may therefore fail at import. CUDA is hard-coded, and Weights \& Biases logging is enabled by default; the code logs experiment metrics and configuration, so institutional review of external telemetry is warranted, although no participant-level data transfer is demonstrated by this inspection. For example, the paper reports BrainNetTF AUC 0.7141, while the README gives 0.7147; the paper reports STAGIN (SERO) accuracy 57.88\%, while the README repeats 62.66\%; BrainWaveNet accuracy SD is 2.03 in the paper and 2.04 in the README. The review is static: no training run or runtime verification was performed. Attention-based region rankings remain exploratory, not causal explanations or validated biomarkers (\cite{brainwavenetcode}).
 
+\subsection{Code-audit evidence and traceability}
+The following register makes the static findings independently checkable against the public implementation. Line references point to the repository version reviewed; they do not establish that the code was executed.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\begin{tabularx}{\textwidth}{p{2.65cm}p{2.45cm}Y}
+\toprule
+\textbf{Finding} & \textbf{Source lines} & \textbf{What the code establishes} \\
+\midrule
+Overlapping validation resamples & \href{https://github.com/ku-milab/BrainWaveNet/blob/main/main.py\#L63-L64}{\texttt{main.py}, 63--64} & Uses \texttt{StratifiedShuffleSplit} with five iterations; these are repeated random hold-outs, not mutually exclusive folds. \\
+Test-set exposure during training & \href{https://github.com/ku-milab/BrainWaveNet/blob/main/training/training.py\#L107-L128}{\texttt{training.py}, 107--128} & Evaluates test data each epoch and logs test loss, accuracy and AUC; checkpoint selection itself uses validation AUC (line 117). \\
+Test set reused across iterations & \href{https://github.com/ku-milab/BrainWaveNet/blob/main/main.py\#L74-L82}{\texttt{main.py}, 74--82}; \href{https://github.com/ku-milab/BrainWaveNet/blob/main/training/training.py\#L150-L152}{\texttt{training.py}, 150--152} & The same loaded test arrays are passed to each iteration and evaluated again after training. \\
+Import and hardware portability & \href{https://github.com/ku-milab/BrainWaveNet/blob/main/training/training.py\#L14-L21}{\texttt{training.py}, 14--21}; \href{https://github.com/ku-milab/BrainWaveNet/blob/main/utils/metic.py\#L1-L5}{\texttt{utils/metic.py}, 1--5} & The import requests \texttt{utils.metric}, while the tracked file is named \texttt{metic.py}; the training module also selects CUDA unconditionally. \\
+Paper/configuration differences & \href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/training/basic.yaml\#L1-L9}{\texttt{basic.yaml}, 1--9}; \href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/optimizer/adam.yaml\#L1-L8}{\texttt{adam.yaml}, 1--8}; \href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/model/bwn.yaml\#L6-L19}{\texttt{bwn.yaml}, 6--19} & The checked-in configuration specifies batch size 64, learning rate $5\times10^{-5}$ and temporal dimension 32; the paper reports 32, $3\times10^{-5}$ and 16. \\
+External experiment telemetry & \href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/config.yaml\#L14-L18}{\texttt{config.yaml}, 14--18}; \href{https://github.com/ku-milab/BrainWaveNet/blob/main/main.py\#L66-L72}{\texttt{main.py}, 66--72}; \href{https://github.com/ku-milab/BrainWaveNet/blob/main/training/training.py\#L118-L128}{\texttt{training.py}, 118--128} & W\&B is enabled by default; configuration and epoch-level metrics are sent to experiment logging. The inspected calls do not demonstrate transfer of participant-level imaging data. \\
+Preprocessing artefacts & \href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/dataset/ABIDE.yaml\#L1-L14}{\texttt{ABIDE.yaml}, 1--14}; \href{https://github.com/ku-milab/BrainWaveNet/blob/main/postprocessing/cwt_processor.py\#L37-L49}{\texttt{cwt\_processor.py}, 37--49} & The training configuration expects two pickle files; the tracked CWT script shows a separate NPZ-to-CWT step, but the expected pickle inputs and a complete reproducible upstream pipeline are not supplied in the reviewed repository. \\
+Complex-valued layer semantics & \href{https://github.com/ku-milab/BrainWaveNet/blob/main/models/module.py\#L34-L47}{\texttt{module.py}, 34--47} & The implementation explicitly applies separate real and imaginary linear layers, then recombines their outputs. \\
+Reported benchmark discrepancy & \href{https://github.com/ku-milab/BrainWaveNet/blob/main/README.md\#L11-L20}{\texttt{README.md}, 11--20} & README benchmark values differ from the paper for selected comparator metrics; the report records the discrepancy without inferring its cause. \\
+\bottomrule
+\end{tabularx}
+\caption{Traceability register for the static BrainWaveNet source-code review. Links identify the exact files and line ranges examined.}
+\label{tab:code-evidence}
+\end{table}
+
+
 \subsection{SUM values}
 Leslie's SUM values—Respect, Connect, Protect and Care—translate ethical aims into project requirements (\cite{leslie2019}).
 
