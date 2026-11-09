@@ -243,4 +243,142 @@ The appropriate decision is to restrict the model to research and apply the prop
 Immediate work should protect the final test set, reconcile paper--repository discrepancies, version the development pipeline, publish a model card and assign accountable owners. Any future pilot must be limited, supervised and reversible, with monitoring for drift, errors, complaints and unintended impacts. Outputs must be identified as research classifications, not diagnoses, and must not determine access to support. If these conditions cannot be met, the responsible decision is not to deploy BrainWaveNet.
 
 \printbibliography[heading=bibintoc,title={References}]
+
+\appendix
+\section{ABIDE-I Phenotypic Data and Quality-Control Audit}
+\label{app:abide-audit}
+
+This appendix summarises the descriptive audit of the ABIDE-I phenotype file
+\texttt{Phenotypic\_V1\_0b\_preprocessed1.csv} (1,112 records; 106 columns).
+Its SHA-1 checksum at the time of audit was
+\texttt{dba98482ed0da08d3f6bcf59b8b5342da9e69645}. These statistics describe
+the released phenotype file, not a re-analysis of BrainWaveNet and not
+necessarily the 897 participants retained by Jeong et al. (2024). The original
+CSV is available at
+\url{https://s3.amazonaws.com/fcp-indi/data/Projects/ABIDE_Initiative/Phenotypic_V1_0b_preprocessed1.csv}.
+A machine-readable extract of the summary statistics is supplied as
+\texttt{appendix\_abide\_audit\_summary.csv} in the project repository.
+
+\subsection{Demographic composition}
+\begin{table}[H]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Group} & \textbf{Male} & \textbf{Female} & \textbf{Total} & \textbf{Male (\%)}\\
+\midrule
+ASD & 474 & 65 & 539 & 87.9\\
+Control & 474 & 99 & 573 & 82.7\\
+\midrule
+Total & 948 & 164 & 1,112 & 85.3\\
+\bottomrule
+\end{tabular}
+\caption{Sex and diagnostic-group counts in the audited phenotype file. Sex is encoded as binary male/female categories in this release.}
+\label{tab:app-demographics}
+\end{table}
+
+Age was available for all 1,112 records. Overall mean age was 17.05 years
+(median 14.66; range 6.47--64.00). For ASD participants, mean age was 17.01
+(median 14.42; range 7.00--64.00); for controls, 17.08 (median 14.80; range
+6.47--56.20).
+
+\subsection{Site composition}
+\begin{longtable}{lrrr}
+\caption{Participant counts by phenotype-file SITE\_ID.}\\
+\toprule
+\textbf{SITE\_ID} & \textbf{ASD} & \textbf{Control} & \textbf{Total}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{SITE\_ID} & \textbf{ASD} & \textbf{Control} & \textbf{Total}\\
+\midrule
+\endhead
+CALTECH & 19 & 19 & 38\\
+CMU & 14 & 13 & 27\\
+KKI & 22 & 33 & 55\\
+LEUVEN\_1 & 14 & 15 & 29\\
+LEUVEN\_2 & 15 & 20 & 35\\
+MAX\_MUN & 24 & 33 & 57\\
+NYU & 79 & 105 & 184\\
+OHSU & 13 & 15 & 28\\
+OLIN & 20 & 16 & 36\\
+PITT & 30 & 27 & 57\\
+SBL & 15 & 15 & 30\\
+SDSU & 14 & 22 & 36\\
+STANFORD & 20 & 20 & 40\\
+TRINITY & 24 & 25 & 49\\
+UCLA\_1 & 49 & 33 & 82\\
+UCLA\_2 & 13 & 14 & 27\\
+UM\_1 & 55 & 55 & 110\\
+UM\_2 & 13 & 22 & 35\\
+USM & 58 & 43 & 101\\
+YALE & 28 & 28 & 56\\
+\midrule
+Total & 539 & 573 & 1,112\\
+\bottomrule
+\end{longtable}
+
+The file contains 20 SITE\_ID labels, not necessarily 20 distinct physical
+centres. Female-coded records (SEX=2) are absent from LEUVEN\_1, OHSU, SBL,
+TRINITY and USM.
+
+\subsection{Quality-control completeness and group summaries}
+Six fields were examined: \texttt{func\_mean\_fd}, \texttt{func\_perc\_fd},
+\texttt{func\_outlier}, \texttt{func\_quality}, \texttt{anat\_cnr} and
+\texttt{anat\_snr}. All six were missing for the same 13 participants (10 ASD;
+3 controls), leaving 1,099 complete records (529 ASD; 570 controls).
+
+\begin{table}[H]
+\centering\small
+\begin{tabularx}{\textwidth}{lrrrr}
+\toprule
+\textbf{QC metric} & \textbf{ASD mean} & \textbf{ASD median} & \textbf{Control mean} & \textbf{Control median}\\
+\midrule
+Functional mean FD & 0.1619 & 0.0931 & 0.1026 & 0.0711\\
+Frames above FD threshold (\%) & 16.5322 & 7.1823 & 9.6310 & 3.3113\\
+Functional outlier fraction & 0.0062 & 0.0042 & 0.0049 & 0.0029\\
+Functional quality distance & 0.0145 & 0.0108 & 0.0111 & 0.0095\\
+Anatomical CNR & 11.3403 & 10.7594 & 11.9211 & 11.1089\\
+Anatomical SNR & 45.0908 & 15.4424 & 51.0582 & 15.8414\\
+\bottomrule
+\end{tabularx}
+\caption{QC summaries by diagnostic group (ASD $n=529$; controls $n=570$). FD: framewise displacement; CNR: contrast-to-noise ratio; SNR: signal-to-noise ratio. Functional quality distance is 1 minus Spearman correlation to the median volume; lower is closer similarity.}
+\label{tab:app-qc}
+\end{table}
+
+Means and medians differ for some metrics, particularly anatomical SNR,
+indicating skewed distributions. These descriptive differences do not prove
+their cause or establish that BrainWaveNet learned motion-related artefacts.
+
+\subsection{Manual quality ratings}
+\begin{table}[H]
+\centering\small
+\begin{tabularx}{\textwidth}{lrrrrrr}
+\toprule
+\textbf{Rating field} & \multicolumn{2}{c}{\textbf{OK}} & \multicolumn{2}{c}{\textbf{Maybe}} & \multicolumn{2}{c}{\textbf{Fail}}\\
+ & ASD & Control & ASD & Control & ASD & Control\\
+\midrule
+qc\_rater\_1 & 476 & 521 & 4 & 0 & 59 & 52\\
+qc\_anat\_rater\_2 & 420 & 446 & 90 & 104 & 20 & 20\\
+qc\_func\_rater\_2 & 410 & 432 & 87 & 120 & 33 & 18\\
+qc\_anat\_rater\_3 & 469 & 534 & -- & -- & 70 & 38\\
+qc\_func\_rater\_3 & 505 & 530 & -- & -- & 34 & 42\\
+\bottomrule
+\end{tabularx}
+\caption{Manual QC ratings by field and diagnosis. Dashes indicate that a Maybe category was not reported. For rater 2 fields, 9 ASD and 3 control ratings were missing; for rater 3 fields, 0 ASD and 1 control rating were missing.}
+\label{tab:app-ratings}
+\end{table}
+
+Ratings remain separate because raters and modalities are not interchangeable.
+No inter-rater agreement statistic was calculated, so these counts should not
+be collapsed into one overall pass/fail score.
+
+\subsection{Interpretation and limitations}
+The audit does not reconstruct the exact QC selection that produced
+BrainWaveNet's 897 participants: the paper does not provide a complete
+participant-ID list and reproducible exclusion thresholds. The observed
+group-level motion differences do not establish model bias, causality or
+clinical impact. They identify potential confounding that future work should
+test using participant-level exclusion logs, motion sensitivity analyses,
+site-held-out validation and subgroup reporting.
+
 \end{document}
