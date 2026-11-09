@@ -57,6 +57,50 @@ The authors use CPAC-preprocessed data with a 0.01--0.1 Hz band-pass filter and 
 
 BrainWaveNet reports an AUC of 0.7388, accuracy of 67.55\%, sensitivity of 66.49\% and specificity of 68.35\% (mean values across the reported folds). In Table 1, it has the highest AUC, accuracy and sensitivity among the compared methods, but not the highest specificity: BrainNetCNN reports 75.32\%, BrainNetTF 72.55\% and BolT 70.00\%. The standard deviations reported for sensitivity and specificity are 9.17 and 9.80 percentage points, respectively, indicating variation across the reported results. These are retrospective research metrics; they do not demonstrate clinical utility, reliable individual risk estimates or improved patient care. The study does not report prospective clinical evaluation or independent external validation on a separate cohort.
 
+Figure~\ref{fig:abide-performance} summarises the composition of the final ABIDE-I cohort used by Jeong et al. (2024) and the model's reported mean performance. The analysed cohort contains 414 ASD participants and 483 typically developing controls (897 in total), a modest class imbalance in favour of the control group. Sensitivity and specificity are both around 67--68\%, indicating that the reported operating point still produces false negatives and false positives. The paper does not publish the individual test predictions and labels needed to construct a valid confusion matrix.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small]
+% Panel A: cohort composition
+\node[font=\bfseries] at (2.5,3.5) {A. ABIDE-I analysis cohort};
+\draw[->] (0,0) -- (5.2,0) node[right] {Participants};
+\foreach \x/\lab in {0/0,1/100,2/200,3/300,4/400,5/500} {
+  \draw (\x,0.04) -- (\x,-0.04) node[below] {\lab};
+}
+\fill[blue!55] (0,2.35) rectangle (4.14,2.85);
+\node[anchor=east] at (-0.08,2.6) {ASD};
+\node[anchor=west] at (4.22,2.6) {414 (46.2\%)};
+\fill[teal!65] (0,1.35) rectangle (4.83,1.85);
+\node[anchor=east] at (-0.08,1.6) {Control};
+\node[anchor=west] at (4.91,1.6) {483 (53.8\%)};
+\node[align=center] at (2.5,0.65) {Total: 897 participants\\after quality-control exclusions};
+% Panel B: reported performance
+\node[font=\bfseries] at (10.1,3.5) {B. BrainWaveNet mean performance};
+\draw[->] (7.4,0) -- (13.8,0) node[right] {Metric};
+\foreach \y/\lab in {0/0,1/25,2/50,3/75,4/100} {
+  \draw (7.36,\y) -- (7.44,\y) node[left=2pt] {\lab};
+}
+\draw[gray!40] (7.45,1) -- (13.6,1);
+\draw[gray!40] (7.45,2) -- (13.6,2);
+\draw[gray!40] (7.45,3) -- (13.6,3);
+\fill[blue!55] (8.0,0) rectangle (8.75,2.955);
+\fill[teal!65] (9.35,0) rectangle (10.10,2.702);
+\fill[orange!75] (10.70,0) rectangle (11.45,2.660);
+\fill[purple!55] (12.05,0) rectangle (12.80,2.734);
+\node[rotate=45,anchor=west] at (8.05,-0.12) {AUC};
+\node[rotate=45,anchor=west] at (9.4,-0.12) {Accuracy};
+\node[rotate=45,anchor=west] at (10.75,-0.12) {Sensitivity};
+\node[rotate=45,anchor=west] at (12.1,-0.12) {Specificity};
+\node[above] at (8.375,2.98) {0.739};
+\node[above] at (9.725,2.73) {67.55\%};
+\node[above] at (11.075,2.69) {66.49\%};
+\node[above] at (12.425,2.76) {68.35\%};
+\end{tikzpicture}
+\caption{ABIDE-I cohort composition after the exclusions reported by Jeong et al. (2024), alongside BrainWaveNet's published mean metrics. Cohort percentages are calculated from 414 ASD and 483 control participants. Performance values are reproduced from the paper and were not independently generated in this project.}
+\label{fig:abide-performance}
+\end{figure}
+
 Jeong et al. (2024) make their implementation publicly available for inspection, but public code alone does not establish reproducibility. There are specific inconsistencies between the paper's Table 1 and the repository README: BrainNetTF AUC is reported as 0.7141 in the paper and 0.7147 in the README; STAGIN (SERO) accuracy is 57.88\% in the paper and 62.66\% in the README; and BrainWaveNet accuracy standard deviation is 2.03 in the paper and 2.04 in the README. These appear to be reporting inconsistencies and should be reconciled against the authors' experiment records before claiming an exact reproduction. In addition, inspection of the official training code shows that test-set metrics are calculated and logged at every epoch, while checkpoint selection is based on validation AUC. This creates a risk that repeated visibility of test results could influence human decisions during development; the code inspection does not establish that test results were used for model selection or that data leakage occurred. A stricter procedure would keep test results inaccessible until model development and selection are complete. The paper's ROI analysis should also be treated as exploratory: attention-based rankings do not, by themselves, establish biological causation, validated biomarkers or individual clinical benefit. Technical pattern recognition must therefore be distinguished from clinical utility and improvements in care. Furthermore, reducing the diversity of autistic people to two classification groups does not capture the full range of their experiences, characteristics or support needs.
 
 The system boundary therefore extends beyond the neural network itself. It includes the MRI scanner, local acquisition protocols, site-specific preprocessing, participant selection, the model's decision threshold, the professional interpreting the output and the institutional framework governing its use. Errors and biases may arise at any stage of this process, rather than only within the model architecture (\cite{suresh2021}). This system-level perspective informs the ethical assessment below.
