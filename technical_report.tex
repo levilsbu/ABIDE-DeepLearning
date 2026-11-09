@@ -55,28 +55,28 @@ Jeong et al. (2024) propose BrainWaveNet, a wavelet-based Transformer for classi
 
 BrainWaveNet reports mean AUC 0.7388, accuracy 67.55\%, sensitivity 66.49\% and specificity 68.35\%. Although it achieves the highest AUC, accuracy and sensitivity among the methods compared in the paper, it does not have the highest specificity. These retrospective results do not demonstrate clinical utility or external validity; the study reports no prospective clinical evaluation or independent external-cohort validation. The cohort and performance summary is shown in Figure~\ref{fig:abide-performance}. A confusion matrix cannot be reconstructed from these aggregate metrics without the relevant test labels and individual predictions.
 
-The demographic figures provide context for fairness, not evidence of subgroup model performance. The sex counts and acquisition-collection counts refer to the full ABIDE-I release, not BrainWaveNet's post-exclusion cohort. The paper does not report the retained cohort's sex breakdown or performance by sex. Collection size also does not itself establish a scanner effect, but the uneven distribution supports the need for site-stratified validation (\cite{grana2021}).
+The demographic figure provides context for fairness, not evidence of subgroup model performance. The full release includes 360 males and 179 females in the ASD group, and 403 males and 170 females among controls. The original paper notes that females were excluded by design at 25\% of sites. These descriptive counts do not establish model performance by sex, and they cannot be assumed to apply to BrainWaveNet's retained 897 participants because its sex breakdown is not reported. ABIDE-I comprises 17 sites contributing 20 datasets; site differences make site-stratified validation important (\cite{dimartino2014}).
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[x=0.020cm,y=0.48cm,font=\small]
 \node[font=\bfseries] at (250,5.0) {ABIDE-I sex distribution by diagnostic group};
 \draw[->] (0,0) -- (520,0) node[right] {Participants};
-\foreach \x/\lab in {0/0,100/100,200/200,300/300,400/400,500/500} {\draw (\x,0.08) -- (\x,-0.08) node[below] {\lab};}
-\fill[blue!60] (0,3.0) rectangle (474,3.55);
-\fill[orange!75] (0,2.25) rectangle (65,2.80);
-\fill[blue!60] (0,1.0) rectangle (474,1.55);
-\fill[orange!75] (0,0.25) rectangle (99,0.80);
+\foreach \x in {0,100,200,300,400,500} {\draw (\x,0.08) -- (\x,-0.08) node[below] {\x};}
+\fill[blue!60] (0,3.0) rectangle (360,3.55);
+\fill[orange!75] (0,2.25) rectangle (179,2.80);
+\fill[blue!60] (0,1.0) rectangle (403,1.55);
+\fill[orange!75] (0,0.25) rectangle (170,0.80);
 \node[anchor=east] at (-8,3.27) {ASD male};
-\node[anchor=west] at (482,3.27) {474 (87.9\%)};
+\node[anchor=west] at (368,3.27) {360 (66.8\%)};
 \node[anchor=east] at (-8,2.52) {ASD female};
-\node[anchor=west] at (73,2.52) {65 (12.1\%)};
+\node[anchor=west] at (187,2.52) {179 (33.2\%)};
 \node[anchor=east] at (-8,1.27) {Control male};
-\node[anchor=west] at (482,1.27) {474 (82.7\%)};
+\node[anchor=west] at (411,1.27) {403 (70.3\%)};
 \node[anchor=east] at (-8,0.52) {Control female};
-\node[anchor=west] at (107,0.52) {99 (17.3\%)};
+\node[anchor=west] at (178,0.52) {170 (29.7\%)};
 \end{tikzpicture}
-\caption{Sex distribution in the full ABIDE-I release, based on the published demographic totals. These counts are not the sex breakdown of BrainWaveNet's 897-participant analysis cohort. The source reports binary male/female categories; the chart reflects those source categories and does not imply that sex and gender are interchangeable (\cite{grana2021}).}
+\caption{Male and female counts in the full ABIDE-I release, derived from the abstract's totals (539 ASD: 360 male; 573 controls: 403 male). These are not the sex breakdown of BrainWaveNet's 897-participant analysis cohort. The source uses binary male/female categories and does not report model performance by sex (\cite{dimartino2014}).}
 \label{fig:abide-sex}
 \end{figure}
 
@@ -160,7 +160,7 @@ FAST translates ethical aims into operational requirements. In Leslie's framewor
 \toprule
 \textbf{Principle} & \textbf{Evidence gap or risk} & \textbf{Required control}\\
 \midrule
-Fairness & Results are aggregate; subgroup performance by age, sex, site or clinical group is not reported. A binary target may also oversimplify a heterogeneous condition (\cite{jeong2024}). & Justify the target and design; report subgroup errors, calibration and uncertainty where sample sizes permit; document limitations and user training (\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}).\\
+Fairness & Results are aggregate; subgroup performance by age, sex, site or clinical group is not reported. The full ABIDE-I release is male-skewed, and 25\% of sites excluded females by design; the BrainWaveNet subset's sex breakdown is unavailable. A binary target may also oversimplify a heterogeneous condition (\cite{jeong2024,dimartino2014}). & Justify the target and design; report subgroup errors, calibration and uncertainty where sample sizes permit; document limitations and user training (\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}).\\
 Accountability & No clinical owner, release authority or incident process is identified. Code logs test metrics each epoch while selecting checkpoints by validation AUC. This risks repeated human exposure to test feedback but does not prove leakage or test-guided selection. & Assign named human owners; log decisions; restrict final test access until development is complete; define who can approve, pause or withdraw the model (\cite{raji2020,who2021,gmlp2021}).\\
 Sustainability & Energy, hardware and maintenance requirements, and the balance of long-term costs and benefits, are unreported. & Use SIA reviews to assess computational demands, institutional capacity and effects on affected communities; revisit these if the intended use changes (\cite{leslie2019,who2021}).\\
 Transparency & The method and code are public, but paper--README metric discrepancies remain unresolved. Accessible explanations of purpose and limitations are not established. & Reconcile results; version the pipeline; publish a model card explaining intended use, outputs, uncertainty and limitations. State clearly that outputs are research classifications, not diagnoses (\cite{mitchell2019,who2021,gmlp2021}).\\
