@@ -94,51 +94,7 @@ Six quality-control fields are missing for 13 participants (10 ASD; 3 controls).
 \label{fig:abide-sex}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[font=\small]
-% Panel A: cohort composition
-\node[font=\bfseries] at (2.5,3.5) {A. ABIDE-I analysis cohort};
-\begin{scope}[yshift=-0.8cm]
-\draw[->] (0,0) -- (5.2,0) node[below right] {$n$};
-\foreach \x/\lab in {0/0,1/100,2/200,3/300,4/400,5/500} {
-  \draw (\x,0.04) -- (\x,-0.04) node[below] {\lab};
-}
-\fill[blue!55] (0,2.35) rectangle (4.14,2.85);
-\node[anchor=east] at (-0.08,2.6) {ASD};
-\node[anchor=west] at (4.22,2.6) {414 (46.2\%)};
-\fill[teal!65] (0,1.35) rectangle (4.83,1.85);
-\node[anchor=east] at (-0.08,1.6) {Control};
-\node[anchor=west] at (4.91,1.6) {483 (53.8\%)};
-\node[align=center] at (2.5,0.65) {Total: 897 participants\\after quality-control exclusions};
-% Panel B: reported performance
-\end{scope}
-\node[font=\bfseries] at (10.1,3.5) {B. BrainWaveNet mean performance};
-\begin{scope}[yshift=-1.15cm]
-\draw[->] (7.4,0) -- (13.8,0) node[right] {Metric};
-\foreach \y/\lab in {0/0,1/25,2/50,3/75,4/100} {
-  \draw (7.36,\y) -- (7.44,\y) node[left=2pt] {\lab};
-}
-\draw[gray!40] (7.45,1) -- (13.6,1);
-\draw[gray!40] (7.45,2) -- (13.6,2);
-\draw[gray!40] (7.45,3) -- (13.6,3);
-\fill[blue!55] (8.0,0) rectangle (8.75,2.955);
-\fill[teal!65] (9.35,0) rectangle (10.10,2.702);
-\fill[orange!75] (10.70,0) rectangle (11.45,2.660);
-\fill[purple!55] (12.05,0) rectangle (12.80,2.734);
-\node[align=center,font=\scriptsize] at (8.375,-0.38) {AUC};
-\node[align=center,font=\scriptsize] at (9.725,-0.38) {Accuracy};
-\node[align=center,font=\scriptsize] at (11.075,-0.38) {Sensitivity};
-\node[align=center,font=\scriptsize] at (12.425,-0.38) {Specificity};
-\node[above] at (8.375,2.98) {0.739};
-\node[above] at (9.725,2.73) {67.55\%};
-\node[above] at (11.075,2.69) {66.49\%};
-\node[above] at (12.425,2.76) {68.35\%};
-\end{scope}
-\end{tikzpicture}
-\caption{ABIDE-I cohort composition after the exclusions reported by Jeong et al. (2024), alongside BrainWaveNet's published mean metrics. Cohort percentages are calculated from 414 ASD and 483 control participants. Performance values are reproduced from the paper and were not independently generated in this project.}
-\label{fig:abide-performance}
-\end{figure}
+
 
 
 The public implementation raises three issues relevant to the ethical assessment. First, the test set is evaluated and logged at every training epoch, although checkpoint selection uses validation AUC; repeated access exposes test feedback and weakens the independence of the final evaluation (href{https://github.com/ku-milab/BrainWaveNet/blob/main/training/training.py\#L107-L128}{training procedure}). This does not establish that the authors selected the model using test results. Second, the checked-in configuration differs from the hyperparameters reported in the paper, including batch size, learning rate and temporal embedding dimension (href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/training/basic.yaml\#L1-L9}{training configuration}; href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/model/bwn.yaml\#L6-L19}{model configuration}). Third, the configured preprocessed input files are not included in the reviewed repository, and the complete upstream preprocessing pipeline is not available there (href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/dataset/ABIDE.yaml\#L1-L14}{dataset configuration}). These limitations reduce reproducibility and make it difficult to verify whether the published results correspond to the current code. The review was static; no training run was performed. Attention-based region rankings remain exploratory, not causal explanations or validated biomarkers (\cite{brainwavenetcode}).
@@ -209,11 +165,11 @@ The proposed process-based governance (PBG) framework spans five lifecycle phase
 \endfoot
 \bottomrule
 \endlastfoot
-Problem formulation & Binary classification is not a demonstrated patient benefit or diagnostic pathway. Autistic co-design is not documented. & Sponsor and autistic advisers define purpose, stakeholders, alternatives and prohibited uses. Complete Alpha SIA before data use; stop if purpose and participation are unjustified.\\
-Data acquisition & The phenotype file is male-skewed and has 13 records with incomplete QC fields. Consent scope and secondary-use conditions need confirmation. & Data steward records provenance, permissions, consent basis, demographics, missingness and quality. Privacy lead reviews access, retention and re-identification risk.\\
-Preprocessing & CPAC, filtering, parcellation, cropping and wavelet transformation are paper-reported but not independently reproduced here. Exclusions may affect group representation. & Version code, parameters and environment; log exclusions; test motion thresholds and site effects. Review at Alpha-to-Beta.\\
-Modelling and validation & Internal metrics are reported, but subgroup and independent external clinical validation are not. Test logging creates exposure risk; random splits alone do not establish site generalisation. & Independent reviewer replaces overlapping random resampling with a documented, participant-level and preferably site-held-out protocol; freezes test data until one final evaluation; assesses subgroup errors, calibration and uncertainty. Resolve code/configuration mismatches and provide preprocessing artefacts before claiming reproducibility. No progression without acceptable evidence and a model card.\\
-Deployment and monitoring & No clinical deployment, prospective monitoring, incident process or safety case is evidenced. Repository availability is not clinical authorisation. & Retain research-only restriction. Any future pilot needs approvals, trained users, human review, complaint routes, drift/subgroup monitoring, pause and rollback thresholds, and SIA reassessment.\\
+Problem formulation & Patient benefit and autistic co-design are not demonstrated. & Sponsor and autistic advisers define purpose, alternatives and prohibited uses. Complete Alpha SIA before data use.\\
+Data acquisition & The phenotype file is male-skewed; 13 records have incomplete QC fields. Consent scope needs confirmation. & Data steward records provenance, permissions, demographics and quality; privacy lead reviews access and re-identification risk.\\
+Preprocessing & Reported CPAC, filtering, parcellation and wavelet steps were not reproduced. Exclusions may affect representation. & Version code and parameters; log exclusions; test motion and site effects at Alpha-to-Beta.\\
+Modelling and validation & Subgroup and independent external clinical validation are not reported. Repeated test logging exposes test feedback; random splits do not establish site generalisation. & Independent reviewer requires participant-level, preferably site-held-out validation; freezes test data until final evaluation; assesses subgroup errors, calibration and uncertainty. Resolve reproducibility gaps before progression.\\
+Deployment and monitoring & No clinical deployment, monitoring or safety case is evidenced. Repository availability is not authorisation. & Retain research-only restriction. A future pilot requires approvals, trained users, human review, complaint routes, monitoring and pause/rollback thresholds.\\
 \end{longtable}
 \normalsize
 
