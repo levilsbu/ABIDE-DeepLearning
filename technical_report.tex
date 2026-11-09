@@ -67,9 +67,9 @@ An rs-fMRI scan produces a sequence of volumetric images rather than a direct re
 \subsection{Project-specific evidence and data audit}
 Jeong et al. report 897 participants after quality-control exclusions (414 ASD; 483 controls), a 7:2:1 split and five-fold cross-validation. Reported mean performance was AUC 0.7388, accuracy 67.55\%, sensitivity 66.49\% and specificity 68.35\%. These are retrospective paper results, not independently reproduced here; external clinical validation is not reported (\cite{jeong2024}).
 
-The released ABIDE-I phenotype file audited for this project contains 1,112 records (539 ASD; 573 controls), including 948 males and 164 females. The ASD group contains 474 males and 65 females; controls contain 474 males and 99 females. It has 20 SITE\_ID labels. Di Martino et al. report the same total but different diagnostic counts (533 ASD; 579 controls), and state that 25\% of sites excluded females by design (\cite{dimartino2014}). The discrepancy is retained rather than reconciled without evidence.
+The audited ABIDE-I phenotype file contains 1,112 records (539 ASD; 573 controls), including 948 males and 164 females, across 20 SITE\_ID labels. Di Martino et al. report the same total but different diagnostic counts (533 ASD; 579 controls), and note that 25\% of sites excluded females by design (\cite{dimartino2014}). The discrepancy cannot be reconciled from the available evidence.
 
-Six quality-control fields are missing for 13 participants (10 ASD; 3 controls). Among complete cases, mean functional mean framewise displacement is 0.1619 for ASD (n=529) and 0.1026 for controls (n=570). These descriptive figures refer to the 1,112-record phenotype file, not the 897-person BrainWaveNet cohort. They identify representativeness and data-quality questions; they do not establish model bias or explain its predictions.
+Six quality-control fields are missing for 13 participants (10 ASD; 3 controls). Among complete cases, mean framewise displacement is 0.1619 for ASD (n=529) and 0.1026 for controls (n=570). These figures describe the phenotype file, not BrainWaveNet's 897-person cohort; they raise data-quality questions but do not establish model bias.
 
 \begin{figure}[H]
 \centering
@@ -144,7 +144,7 @@ Transparency & The paper--README metric differences remain unresolved; accessibl
 
 
 \subsection{PBG landscape, roles and decision gates}
-The proposed process-based governance (PBG) framework spans five lifecycle phases. The sponsor owns purpose and resources; the ML/data lead maintains technical records; the data steward documents provenance; the privacy specialist reviews access; an independent reviewer challenges validation; the clinical safety lead owns the safety case; autistic representatives contribute to decisions; and the release board approves or rejects progression.
+The PBG framework spans five lifecycle phases. The sponsor owns purpose and resources; the ML/data lead maintains technical records; the data steward documents provenance; the privacy specialist reviews access; an independent reviewer challenges validation; the clinical safety lead owns the safety case; autistic representatives contribute; and the release board controls progression.
 
 \small
 \setlength{\LTcapwidth}{\textwidth}
