@@ -44,7 +44,7 @@ To answer this, the evaluation applies Leslie's SUM values alongside the FAST pr
 
 The scope encompasses this specific model, dataset, and public code implementation, paying close attention to social impact, fairness, accountability, transparency, sustainability, privacy, clinical safety, and technical validity. The analysis relies strictly on the BrainWaveNet paper, ABIDE-I documentation, and the linked public repository; experiments are not independently re-run and identifiable participant data are not handled.
 
-Naturally, this document is neither a clinical trial report, a formal legal opinion, nor a certified medical-device conformity assessment. The assessment does not infer individual diagnostic capacity from group-level statistics or assume that the permissions governing a public research dataset automatically extend to new clinical applications. Where sources omit governance workflows, an evidence gap is recorded and safeguards are proposed rather than misconduct being assumed. Section 2 outlines the clinical and technical context, Section 3 maps out the SUM/FAST assessment alongside lifecycle controls and decision gates, and Section 4 concludes with concrete recommendations for deployment.
+This is not a clinical trial report, legal opinion or medical-device conformity assessment. It does not infer individual diagnostic capacity from group statistics or assume that research-data permissions extend to clinical use. Missing governance evidence is recorded as a gap, not misconduct. Section 2 outlines the research context, Section 3 assesses SUM/FAST and lifecycle controls, and Section 4 gives recommendations.
 
 \section{AI Project Background}
 \subsection{Clinical and research context}
@@ -140,7 +140,7 @@ Six quality-control fields are missing for 13 participants (10 ASD; 3 controls).
 \label{fig:abide-performance}
 \end{figure}
 
-The paper and README differ on some comparator metrics and the reported accuracy standard deviation. Training code logs test metrics each epoch, although checkpoint selection is described as validation-AUC-based. This creates a risk of test-set feedback, not proof of leakage. The final test set should remain inaccessible until development decisions are frozen. Attention-based region rankings are exploratory, not causal explanations or validated biomarkers.
+A static review of the authors' public implementation identifies further reproducibility concerns. The paper reports batch size 32, learning rate $3\times10^{-5}$ and temporal embedding dimension 16, whereas the checked-in configuration specifies 64, $5\times10^{-5}$ and 32 respectively. This may reflect an undocumented version difference; the published metrics cannot be tied confidently to the current configuration. In \texttt{main.py}, five \texttt{StratifiedShuffleSplit} iterations create potentially overlapping validation subsets rather than five mutually exclusive folds. In \texttt{training.py}, the same test set is evaluated and logged at every epoch, despite checkpoint selection using validation AUC. This exposes test feedback and is not evidence that the authors selected the model on test results. The configured pickle inputs and upstream preprocessing outputs are not included in the repository, limiting end-to-end reproduction. The training import \texttt{utils.metric} also does not match the tracked \texttt{utils/metic.py}; a clean checkout may therefore fail at import. CUDA is hard-coded, and Weights \& Biases logging is enabled by default; the code logs experiment metrics and configuration, so institutional review of external telemetry is warranted, although no participant-level data transfer is demonstrated by this inspection. The README also differs from the paper on comparator metrics and BrainWaveNet's accuracy standard deviation. Attention-based region rankings remain exploratory, not causal explanations or validated biomarkers (\cite{brainwavenetcode}).
 
 \subsection{SUM values}
 Leslie's SUM values—Respect, Connect, Protect and Care—translate ethical aims into project requirements (\cite{leslie2019}).
@@ -162,7 +162,7 @@ Care & Retrospective classification does not demonstrate improved wellbeing. Mis
 \label{tab:sum}
 \end{table}
 
-A secure classifier may still be harmful if a group-level research output is treated as an individual diagnosis. Ethical acceptability therefore depends on purpose, participation and consequences, not data protection alone.
+
 
 \subsection{FAST principles}
 FAST operationalises fairness, accountability, sustainability and transparency in governance (\cite{leslie2019}).
@@ -184,7 +184,7 @@ Transparency & The paper--README metric differences remain unresolved; accessibl
 \label{tab:fast}
 \end{table}
 
-The binary ASD/control target cannot represent the diversity of autistic characteristics and support needs. Any future research into specific characteristics would require validated measures and professional interpretation. These trade-offs belong in the risk register.
+
 
 \subsection{PBG landscape, roles and decision gates}
 The proposed process-based governance (PBG) framework spans five lifecycle phases. The sponsor owns purpose and resources; the ML/data lead maintains technical records; the data steward documents provenance; the privacy specialist reviews access; an independent reviewer challenges validation; the clinical safety lead owns the safety case; autistic representatives contribute to decisions; and a release board records approvals and residual risks.
