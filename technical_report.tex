@@ -80,17 +80,7 @@ The demographic figures provide context for fairness, not evidence of subgroup m
 \label{fig:abide-sex}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[x=0.030cm,y=0.34cm,font=\scriptsize]
-\node[font=\bfseries] at (110,1.2) {ABIDE-I participants by acquisition collection};
-\foreach \name/\n/\y in {NYU/184/0,USM/101/-1,UM1/110/-2,UCLA1/82/-3,YALE/56/-4,TRINITY/49/-5,MAXMUN/57/-6,PITT/57/-7,KKI/55/-8,STANFORD/40/-9,OLIN/36/-10,SDSU/36/-11,LEUVEN2/35/-12,UM2/35/-13,OHSU/28/-14,CMU/27/-15,UCLA2/27/-16,SBL/30/-17,LEUVEN1/29/-18,CALTECH/38/-19} {\node[anchor=east] at (-5,\y+0.18) {\name}; \fill[teal!65] (0,\y) rectangle (\n,\y+0.36); \node[anchor=west] at (\n+4,\y+0.18) {\n};}
-\draw[->] (0,-20) -- (220,-20) node[right] {Participants};
-\foreach \x in {0,50,100,150,200} {\draw (\x,-19.92) -- (\x,-20.08) node[below] {\x};}
-\end{tikzpicture}
-\caption{Number of participants in each ABIDE-I acquisition collection. The 20 collection labels sum to 1,112 participants; multiple collections may belong to the same broader site. Counts are from the published ABIDE-I demographic table, not the BrainWaveNet post-QC subset (\cite{grana2021}).}
-\label{fig:abide-sites}
-\end{figure}
+
 
 \begin{figure}[H]
 \centering
