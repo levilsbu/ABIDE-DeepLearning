@@ -1,0 +1,90 @@
+table,group,category,n,mean,median,notes
+demographics,ASD,male,474,,,SEX=1
+demographics,ASD,female,65,,,SEX=2
+demographics,Control,male,474,,,SEX=1
+demographics,Control,female,99,,,SEX=2
+demographics,All,male,948,,,85.3 percent of 1112
+demographics,All,female,164,,,14.7 percent of 1112
+age,All,years,1112,17.05,14.66,range 6.47-64.00
+age,ASD,years,539,17.01,14.42,range 7.00-64.00
+age,Control,years,573,17.08,14.80,range 6.47-56.20
+site,CALTECH,ASD,19,,,total 38
+site,CALTECH,Control,19,,,total 38
+site,CMU,ASD,14,,,total 27
+site,CMU,Control,13,,,total 27
+site,KKI,ASD,22,,,total 55
+site,KKI,Control,33,,,total 55
+site,LEUVEN_1,ASD,14,,,total 29
+site,LEUVEN_1,Control,15,,,total 29
+site,LEUVEN_2,ASD,15,,,total 35
+site,LEUVEN_2,Control,20,,,total 35
+site,MAX_MUN,ASD,24,,,total 57
+site,MAX_MUN,Control,33,,,total 57
+site,NYU,ASD,79,,,total 184
+site,NYU,Control,105,,,total 184
+site,OHSU,ASD,13,,,total 28
+site,OHSU,Control,15,,,total 28
+site,OLIN,ASD,20,,,total 36
+site,OLIN,Control,16,,,total 36
+site,PITT,ASD,30,,,total 57
+site,PITT,Control,27,,,total 57
+site,SBL,ASD,15,,,total 30
+site,SBL,Control,15,,,total 30
+site,SDSU,ASD,14,,,total 36
+site,SDSU,Control,22,,,total 36
+site,STANFORD,ASD,20,,,total 40
+site,STANFORD,Control,20,,,total 40
+site,TRINITY,ASD,24,,,total 49
+site,TRINITY,Control,25,,,total 49
+site,UCLA_1,ASD,49,,,total 82
+site,UCLA_1,Control,33,,,total 82
+site,UCLA_2,ASD,13,,,total 27
+site,UCLA_2,Control,14,,,total 27
+site,UM_1,ASD,55,,,total 110
+site,UM_1,Control,55,,,total 110
+site,UM_2,ASD,13,,,total 35
+site,UM_2,Control,22,,,total 35
+site,USM,ASD,58,,,total 101
+site,USM,Control,43,,,total 101
+site,YALE,ASD,28,,,total 56
+site,YALE,Control,28,,,total 56
+qc,ASD,func_mean_fd,529,0.1619,0.0931,
+qc,Control,func_mean_fd,570,0.1026,0.0711,
+qc,ASD,func_perc_fd,529,16.5322,7.1823,percent frames above FD threshold
+qc,Control,func_perc_fd,570,9.6310,3.3113,percent frames above FD threshold
+qc,ASD,func_outlier,529,0.0062,0.0042,
+qc,Control,func_outlier,570,0.0049,0.0029,
+qc,ASD,func_quality,529,0.0145,0.0108,1 minus Spearman correlation to median volume
+qc,Control,func_quality,570,0.0111,0.0095,1 minus Spearman correlation to median volume
+qc,ASD,anat_cnr,529,11.3403,10.7594,
+qc,Control,anat_cnr,570,11.9211,11.1089,
+qc,ASD,anat_snr,529,45.0908,15.4424,
+qc,Control,anat_snr,570,51.0582,15.8414,
+qc_missing,ASD,all_six_qc_fields,10,,,missing in all six QC fields
+qc_missing,Control,all_six_qc_fields,3,,,missing in all six QC fields
+manual_rating,ASD,qc_rater_1_OK,476,,,
+manual_rating,Control,qc_rater_1_OK,521,,,
+manual_rating,ASD,qc_rater_1_Maybe,4,,,
+manual_rating,Control,qc_rater_1_Maybe,0,,,
+manual_rating,ASD,qc_rater_1_Fail,59,,,
+manual_rating,Control,qc_rater_1_Fail,52,,,
+manual_rating,ASD,qc_anat_rater_2_OK,420,,,
+manual_rating,Control,qc_anat_rater_2_OK,446,,,
+manual_rating,ASD,qc_anat_rater_2_Maybe,90,,,
+manual_rating,Control,qc_anat_rater_2_Maybe,104,,,
+manual_rating,ASD,qc_anat_rater_2_Fail,20,,,
+manual_rating,Control,qc_anat_rater_2_Fail,20,,,
+manual_rating,ASD,qc_func_rater_2_OK,410,,,
+manual_rating,Control,qc_func_rater_2_OK,432,,,
+manual_rating,ASD,qc_func_rater_2_Maybe,87,,,
+manual_rating,Control,qc_func_rater_2_Maybe,120,,,
+manual_rating,ASD,qc_func_rater_2_Fail,33,,,
+manual_rating,Control,qc_func_rater_2_Fail,18,,,
+manual_rating,ASD,qc_anat_rater_3_OK,469,,,
+manual_rating,Control,qc_anat_rater_3_OK,534,,,
+manual_rating,ASD,qc_anat_rater_3_Fail,70,,,
+manual_rating,Control,qc_anat_rater_3_Fail,38,,,
+manual_rating,ASD,qc_func_rater_3_OK,505,,,
+manual_rating,Control,qc_func_rater_3_OK,530,,,
+manual_rating,ASD,qc_func_rater_3_Fail,34,,,
+manual_rating,Control,qc_func_rater_3_Fail,42,,,
