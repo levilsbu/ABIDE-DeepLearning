@@ -86,6 +86,31 @@ Care & Retrospective classification does not demonstrate improved wellbeing. Mis
 
 
 
+The phenotype file is male-skewed: 85.3\% of the 1,112 records are male. The imbalance is present in both diagnostic groups, with a lower proportion of female participants in the ASD group (12.1\%) than in the control group (17.3\%). This limits the strength of conclusions about model suitability across sexes, particularly because the paper does not report sex-disaggregated model performance. The distribution is shown in Figure~\\ref{fig:abide-sex}; it describes the audited phenotype file and should not be assumed to represent the 897 participants retained in BrainWaveNet's analysis.
+
+\\begin{figure}[H]
+\\centering
+\\begin{tikzpicture}[x=0.020cm,y=0.48cm,font=\\small]
+\\node[font=\\bfseries] at (250,5.0) {ABIDE-I phenotype-file sex distribution};
+\\draw[->] (0,0) -- (520,0) node[right] {Participants};
+\\foreach \\x in {0,100,200,300,400,500} {\\draw (\\x,0.08) -- (\\x,-0.08) node[below] {\\x};}
+\\fill[blue!60] (0,3.0) rectangle (474,3.55);
+\\fill[orange!75] (0,2.25) rectangle (65,2.80);
+\\fill[blue!60] (0,1.0) rectangle (474,1.55);
+\\fill[orange!75] (0,0.25) rectangle (99,0.80);
+\\node[anchor=east] at (-8,3.27) {ASD male};
+\\node[anchor=west] at (482,3.27) {474 (87.9\\%)};
+\\node[anchor=east] at (-8,2.52) {ASD female};
+\\node[anchor=west] at (73,2.52) {65 (12.1\\%)};
+\\node[anchor=east] at (-8,1.27) {Control male};
+\\node[anchor=west] at (482,1.27) {474 (82.7\\%)};
+\\node[anchor=east] at (-8,0.52) {Control female};
+\\node[anchor=west] at (107,0.52) {99 (17.3\\%)};
+\\end{tikzpicture}
+\\caption{Sex counts in the audited ABIDE-I phenotype file (539 ASD; 573 controls). These are not the sex breakdown of BrainWaveNet's 897-participant analysis cohort. The source records binary male/female categories and does not report model performance by sex.}
+\\label{fig:abide-sex}
+\\end{figure}
+
 \subsection{FAST principles}
 FAST operationalises fairness, accountability, sustainability and transparency in governance (\cite{leslie2019}).
 
