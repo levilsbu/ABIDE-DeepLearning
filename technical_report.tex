@@ -64,41 +64,6 @@ An rs-fMRI scan produces a sequence of volumetric images rather than a direct re
 
 \section{Responsible AI Assessment}
 
-\subsection{Project-specific evidence and data audit}
-Jeong et al. report 897 participants after quality-control exclusions (414 ASD; 483 controls), a 7:2:1 split and five-fold cross-validation. Reported mean performance was AUC 0.7388, accuracy 67.55\%, sensitivity 66.49\% and specificity 68.35\%. These are retrospective paper results, not independently reproduced here; external clinical validation is not reported (\cite{jeong2024}).
-
-The audited ABIDE-I phenotype file contains 1,112 records (539 ASD; 573 controls), including 948 males and 164 females, across 20 SITE\_ID labels. Di Martino et al. report the same total but different diagnostic counts (533 ASD; 579 controls), and note that 25\% of sites excluded females by design (\cite{dimartino2014}). The discrepancy cannot be reconciled from the available evidence.
-
-Six quality-control fields are missing for 13 participants (10 ASD; 3 controls). Among complete cases, mean framewise displacement is 0.1619 for ASD (n=529) and 0.1026 for controls (n=570). These figures describe the phenotype file, not BrainWaveNet's 897-person cohort; they raise data-quality questions but do not establish model bias.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[x=0.020cm,y=0.48cm,font=\small]
-\node[font=\bfseries] at (250,5.0) {ABIDE-I phenotype-file sex distribution};
-\draw[->] (0,0) -- (520,0) node[right] {Participants};
-\foreach \x in {0,100,200,300,400,500} {\draw (\x,0.08) -- (\x,-0.08) node[below] {\x};}
-\fill[blue!60] (0,3.0) rectangle (474,3.55);
-\fill[orange!75] (0,2.25) rectangle (65,2.80);
-\fill[blue!60] (0,1.0) rectangle (474,1.55);
-\fill[orange!75] (0,0.25) rectangle (99,0.80);
-\node[anchor=east] at (-8,3.27) {ASD male};
-\node[anchor=west] at (482,3.27) {474 (87.9\%)};
-\node[anchor=east] at (-8,2.52) {ASD female};
-\node[anchor=west] at (73,2.52) {65 (12.1\%)};
-\node[anchor=east] at (-8,1.27) {Control male};
-\node[anchor=west] at (482,1.27) {474 (82.7\%)};
-\node[anchor=east] at (-8,0.52) {Control female};
-\node[anchor=west] at (107,0.52) {99 (17.3\%)};
-\end{tikzpicture}
-\caption{Sex counts in the audited ABIDE-I phenotype file (539 ASD; 573 controls). These are not the sex breakdown of BrainWaveNet's 897-participant analysis cohort. The source records binary male/female categories and does not report model performance by sex.}
-\label{fig:abide-sex}
-\end{figure}
-
-
-
-
-The public implementation raises three issues relevant to the ethical assessment. First, the test set is evaluated and logged at every training epoch, although checkpoint selection uses validation AUC; repeated access exposes test feedback and weakens the independence of the final evaluation (href{https://github.com/ku-milab/BrainWaveNet/blob/main/training/training.py\#L107-L128}{training procedure}). This does not establish that the authors selected the model using test results. Second, the checked-in configuration differs from the hyperparameters reported in the paper, including batch size, learning rate and temporal embedding dimension (href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/training/basic.yaml\#L1-L9}{training configuration}; href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/model/bwn.yaml\#L6-L19}{model configuration}). Third, the configured preprocessed input files are not included in the reviewed repository, and the complete upstream preprocessing pipeline is not available there (href{https://github.com/ku-milab/BrainWaveNet/blob/main/conf/dataset/ABIDE.yaml\#L1-L14}{dataset configuration}). These limitations reduce reproducibility and make it difficult to verify whether the published results correspond to the current code. The review was static; no training run was performed. Attention-based region rankings remain exploratory, not causal explanations or validated biomarkers (\cite{brainwavenetcode}).
-
 \subsection{SUM values}
 Leslie's SUM values—Respect, Connect, Protect and Care—translate ethical aims into project requirements (\cite{leslie2019}).
 
