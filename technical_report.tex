@@ -87,7 +87,7 @@ The demographic figure provides context for fairness, not evidence of subgroup m
 \begin{tikzpicture}[font=\small]
 % Panel A: cohort composition
 \node[font=\bfseries] at (2.5,3.5) {A. ABIDE-I analysis cohort};
-\draw[->] (0,0) -- (5.2,0) node[right] {Participants};
+\draw[->] (0,0) -- (5.2,0) node[below right] {$n$};
 \foreach \x/\lab in {0/0,1/100,2/200,3/300,4/400,5/500} {
   \draw (\x,0.04) -- (\x,-0.04) node[below] {\lab};
 }
@@ -111,10 +111,10 @@ The demographic figure provides context for fairness, not evidence of subgroup m
 \fill[teal!65] (9.35,0) rectangle (10.10,2.702);
 \fill[orange!75] (10.70,0) rectangle (11.45,2.660);
 \fill[purple!55] (12.05,0) rectangle (12.80,2.734);
-\node[rotate=45,anchor=west] at (8.05,-0.12) {AUC};
-\node[rotate=45,anchor=west] at (9.4,-0.12) {Accuracy};
-\node[rotate=45,anchor=west] at (10.75,-0.12) {Sensitivity};
-\node[rotate=45,anchor=west] at (12.1,-0.12) {Specificity};
+\node[align=center,font=\scriptsize] at (8.375,-0.38) {AUC};
+\node[align=center,font=\scriptsize] at (9.725,-0.38) {Accuracy};
+\node[align=center,font=\scriptsize] at (11.075,-0.38) {Sensitivity};
+\node[align=center,font=\scriptsize] at (12.425,-0.38) {Specificity};
 \node[above] at (8.375,2.98) {0.739};
 \node[above] at (9.725,2.73) {67.55\%};
 \node[above] at (11.075,2.69) {66.49\%};
