@@ -59,16 +59,17 @@ The published pipeline uses CPAC-preprocessed imaging, a 0.01--0.1 Hz band-pass 
 
 BrainWaveNet should be understood as a research classifier developed to distinguish labelled groups in a retrospective neuroimaging dataset. Its architecture and reported experimental results are part of the prior research literature; they do not, by themselves, establish a clinical diagnostic role, individual-level validity or benefit to patients. The distinction between research classification and clinical diagnosis is central to interpreting the project and is examined in the assessment that follows.
 
+\subsection{From imaging signal to computational representation}
+An rs-fMRI scan produces a sequence of volumetric images rather than a direct readout of neural activity. Preprocessing typically addresses motion and other acquisition artefacts, aligns images, and maps regional signals into a common representation. An atlas divides the brain into regions of interest; correlations or other temporal features can then be used to describe functional connectivity. Each stage introduces assumptions: motion correction cannot remove every artefact, atlas choice changes regional boundaries, and filtering determines which temporal variation is retained. Results therefore depend on acquisition and processing choices as well as the learning algorithm.
+
 \section{Responsible AI Assessment}
 
 \subsection{Project-specific evidence and data audit}
-The BrainWaveNet paper reports an analysis cohort of 897 participants (414 ASD and 483 typically developing controls) following quality-control exclusions, with a 7:2:1 train/validation/test split and five-fold cross-validation. Jeong et al. report mean AUC of 0.7388, accuracy of 67.55\%, sensitivity of 66.49\% and specificity of 68.35\%. These are retrospective results reported by the authors and have not been independently reproduced in this coursework. The paper does not report prospective clinical evaluation or validation on an independent external cohort (\cite{jeong2024}).
+Jeong et al. report 897 participants after quality-control exclusions (414 ASD; 483 controls), a 7:2:1 split and five-fold cross-validation. Reported mean performance was AUC 0.7388, accuracy 67.55\%, sensitivity 66.49\% and specificity 68.35\%. These are retrospective paper results, not independently reproduced here; external clinical validation is not reported (\cite{jeong2024}).
 
-The separate audit conducted for this project examined the released ABIDE-I phenotype file, which contains 1,112 records: 539 participants labelled ASD and 573 controls. The file records 948 males and 164 females. The ASD group comprises 474 males and 65 females; the control group comprises 474 males and 99 females. It contains 20 distinct SITE\_ID labels. Di Martino et al. (2014) report the same overall sample size but different diagnostic totals in the Results section (533 ASD; 579 controls). The discrepancy is retained rather than silently reconciled. The original study also notes that 25\% of sites excluded females by design (\cite{dimartino2014}).
+The released ABIDE-I phenotype file audited for this project contains 1,112 records (539 ASD; 573 controls), including 948 males and 164 females. The ASD group contains 474 males and 65 females; controls contain 474 males and 99 females. It has 20 SITE\_ID labels. Di Martino et al. report the same total but different diagnostic counts (533 ASD; 579 controls), and state that 25\% of sites excluded females by design (\cite{dimartino2014}). The discrepancy is retained rather than reconciled without evidence.
 
-A separate descriptive audit of the released phenotype file found that six quality-control fields were missing for 13 participants (10 ASD and 3 controls), leaving 1,099 records with complete values for those fields. Among complete cases, mean functional mean framewise displacement was 0.1619 in the ASD group (n=529) and 0.1026 in controls (n=570); mean percentages of frames above the motion threshold were 16.53\% and 9.63\%, respectively. Manual quality ratings were also present in the phenotype data. These audit results concern the 1,112-record phenotype file and should not be read as a breakdown of the 897 participants retained in the BrainWaveNet experiments.
-
-The two figures distinguish the project's descriptive phenotype audit from the cohort and performance figures reported in the BrainWaveNet paper. Neither figure demonstrates subgroup model performance or clinical effectiveness.
+Six quality-control fields are missing for 13 participants (10 ASD; 3 controls). Among complete cases, mean functional mean framewise displacement is 0.1619 for ASD (n=529) and 0.1026 for controls (n=570). These descriptive figures refer to the 1,112-record phenotype file, not the 897-person BrainWaveNet cohort. They identify representativeness and data-quality questions; they do not establish model bias or explain its predictions.
 
 \begin{figure}[H]
 \centering
@@ -139,74 +140,67 @@ The two figures distinguish the project's descriptive phenotype audit from the c
 \label{fig:abide-performance}
 \end{figure}
 
-The paper and repository README contain small discrepancies in some comparator metrics and in the reported BrainWaveNet accuracy standard deviation. The repository's training code logs test metrics each epoch while checkpoint selection is described as based on validation AUC. This creates a risk of developer exposure to test-set feedback, although it does not by itself demonstrate leakage or test-guided model selection. A controlled development process should keep the final test set inaccessible until model and analysis decisions are frozen. In addition, attention-based region-of-interest rankings are exploratory outputs; they do not establish causal mechanisms, validated biomarkers or individual clinical benefit.
-
+The paper and README differ on some comparator metrics and the reported accuracy standard deviation. Training code logs test metrics each epoch, although checkpoint selection is described as validation-AUC-based. This creates a risk of test-set feedback, not proof of leakage. The final test set should remain inaccessible until development decisions are frozen. Attention-based region rankings are exploratory, not causal explanations or validated biomarkers.
 
 \subsection{SUM values}
-Leslie's SUM values---Respect, Connect, Protect and Care---provide ethical direction throughout the AI lifecycle (\cite{leslie2019}). They are complementary rather than interchangeable: Respect concerns autonomy and dignity; Connect requires inclusive participation; Protect addresses avoidable harm; and Care concerns wellbeing.
+Leslie's SUM values—Respect, Connect, Protect and Care—translate ethical aims into project requirements (\cite{leslie2019}).
 
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{p{2.1cm}Y Y}
+\begin{tabularx}{\textwidth}{p{1.8cm}Y Y}
 \toprule
-\textbf{Value} & \textbf{Evidence and assessment} & \textbf{Required response}\\
+\textbf{Value} & \textbf{Assessment} & \textbf{Required response} \\
 \midrule
-Respect & ABIDE-I reports local IRB approval or waiver and anonymisation before sharing, including removal of HIPAA identifiers and facial information. The paper does not specify individual consent scope or all secondary-use conditions. & Verify consent conditions and data-use agreements; restrict access, protect confidentiality and prevent re-identification.\\
-Connect & The paper does not report autistic participation in project decisions. This is an evidence gap, not proof that consultation did not occur. & Involve autistic people in setting priorities, reviewing proposed uses and communicating results; make participation accessible and fairly compensated.\\
-Protect & The audited phenotype file is 85.3\% male (948/1,112); the female counts are 65 in ASD and 99 in controls. Jeong et al.'s retained cohort has no reported sex breakdown, and 25\% of sites excluded females by design (\cite{dimartino2014}). Representativeness is therefore limited. & Document recruitment and exclusions; test subgroup performance and avoid claims of population-wide generalisability.\\
-Care & Retrospective classification metrics do not demonstrate improved wellbeing. Misclassification could cause distress, stigma, unnecessary investigation or delayed support. & Keep the model research-only; assess harms and ensure outputs never determine access to support (\cite{topol2019,who2021}).\\
+Respect & ABIDE reports local ethics review or waiver and anonymisation. Consent scope and all secondary-use conditions are not established by the reviewed sources. & Verify consent and data-use permissions; restrict access and re-identification risks. \\
+Connect & Autistic participation in BrainWaveNet decisions is not documented; this is an evidence gap, not proof of no consultation. & Involve autistic people in priorities, proposed-use reviews and accessible communication; compensate participation. \\
+Protect & The audited file is 85.3\% male; the retained model cohort has no reported sex breakdown. Motion also differs between diagnostic groups. & Report recruitment, exclusions and subgroup errors; avoid population-wide claims. \\
+Care & Retrospective classification does not demonstrate improved wellbeing. Misclassification may cause distress, stigma or inappropriate decisions. & Maintain research-only use; never determine diagnosis or access to support (\cite{topol2019,who2021}). \\
 \bottomrule
 \end{tabularx}
 \caption{Assessment of BrainWaveNet against SUM values.}
 \label{tab:sum}
 \end{table}
 
-Data protection alone does not make the system respectful or caring: a secure classifier could still cause harm if a group-level research prediction were treated as an individual diagnosis. Ethical acceptability also depends on purpose, participation and consequences.
+A secure classifier may still be harmful if a group-level research output is treated as an individual diagnosis. Ethical acceptability therefore depends on purpose, participation and consequences, not data protection alone.
 
 \subsection{FAST principles}
-FAST translates ethical aims into operational requirements. In Leslie's framework, accountability and transparency apply throughout governance, while fairness and sustainability address system properties and wider impacts (\cite{leslie2019}).
+FAST makes ethical aims operational. Fairness concerns distribution of benefits and errors; Accountability assigns responsibility; Sustainability considers long-term impacts; Transparency makes purpose and limits understandable (\cite{leslie2019}).
 
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{p{2.1cm}Y Y}
+\begin{tabularx}{\textwidth}{p{1.8cm}Y Y}
 \toprule
-\textbf{Principle} & \textbf{Evidence gap or risk} & \textbf{Required control}\\
+\textbf{Principle} & \textbf{Risk or evidence gap} & \textbf{Control} \\
 \midrule
-Fairness & Results are aggregate; subgroup performance by age, sex, site or clinical group is not reported. The phenotype-file audit found 85.3\% male representation and higher mean functional motion in ASD than controls (0.1619 vs 0.1026); 13 QC records were incomplete. These are potential confounding and representativeness concerns, not evidence of model bias. The BrainWaveNet subset's sex/QC breakdown is unavailable, and a binary target may oversimplify a heterogeneous condition (\cite{jeong2024,dimartino2014}). & Justify the target and design; report subgroup errors, calibration and uncertainty; test motion/site sensitivity and document exclusions and limitations (\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}).\\
-Accountability & No clinical owner, release authority or incident process is identified. Code logs test metrics each epoch while selecting checkpoints by validation AUC. This risks repeated human exposure to test feedback but does not prove leakage or test-guided selection. & Assign named human owners; log decisions; restrict final test access until development is complete; define who can approve, pause or withdraw the model (\cite{raji2020,who2021,gmlp2021}).\\
-Sustainability & Energy, hardware and maintenance requirements, and the balance of long-term costs and benefits, are unreported. & Use SIA reviews to assess computational demands, institutional capacity and effects on affected communities; revisit these if the intended use changes (\cite{leslie2019,who2021}).\\
-Transparency & The method and code are public, but paper--README metric discrepancies remain unresolved. Accessible explanations of purpose and limitations are not established. & Reconcile results; version the pipeline; publish a model card explaining intended use, outputs, uncertainty and limitations. State clearly that outputs are research classifications, not diagnoses (\cite{mitchell2019,who2021,gmlp2021}).\\
+Fairness & Aggregate metrics only; no age, sex, site or clinical subgroup results. The phenotype audit is male-skewed and shows higher mean motion in ASD. These are representativeness and confounding concerns, not proof of bias (\cite{jeong2024,dimartino2014}). & Justify the target; report subgroup errors, calibration and uncertainty; test motion and site sensitivity (\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}). \\
+Accountability & No clinical owner, release authority or incident process is identified. Test metrics are logged during training. & Name human owners; freeze test access; log decisions; define approval, pause and withdrawal authority (\cite{raji2020,who2021,gmlp2021}). \\
+Sustainability & Energy, hardware, maintenance and long-term costs are unreported. & Assess computational and institutional capacity and community impacts at each SIA review (\cite{leslie2019,who2021}). \\
+Transparency & The paper--README metric differences remain unresolved; accessible explanations for affected people are not established. & Reconcile results; version the pipeline; publish a model card covering purpose, uncertainty, intended use and limits (\cite{mitchell2019,who2021,gmlp2021}). \\
 \bottomrule
 \end{tabularx}
 \caption{Assessment against FAST principles.}
 \label{tab:fast}
 \end{table}
 
-The binary ASD/control formulation can conceal the diversity of autistic characteristics and support needs. Future research could examine validated measures of specific characteristics, not a single numerical measure or diagnosis. Clinical interpretation must remain with qualified professionals and consider the person's history and voice.
-
-FAST principles can conflict: subgroup reporting may improve fairness but expose small groups, while validation and monitoring strengthen accountability but consume resources. The project should record these trade-offs in its risk register and revisit them at each SIA gate.
-
-The cohort description and phenotype audit have direct implications for the fairness assessment. The audited file is 85.3\% male overall; males represent 87.9\% of the ASD-labelled group and 82.7\% of controls. The original study's report that 25\% of sites excluded females by design further limits assumptions about representativeness. These figures do not establish that BrainWaveNet performs differently by sex: the sex distribution of its retained 897-person cohort and its subgroup error rates are not reported. Similarly, the higher mean functional motion recorded in the ASD-labelled group is a potential source of variation in the imaging data, not proof that motion caused classification errors or that the model is biased. Missing QC values for 13 phenotype records and variation in manual ratings should be documented when assessing exclusions and data quality. SITE\_ID labels also require careful interpretation: 20 labels in the phenotype file should not automatically be treated as 20 independent physical centres. Site-held-out validation and transparent reporting of recruitment and exclusion effects are therefore important before making claims about generalisability.
-
-The published performance figures should also be interpreted in light of reproducibility and model interpretation. The paper and repository README contain small discrepancies in some comparator metrics and in the reported BrainWaveNet accuracy standard deviation. The repository's training code logs test metrics each epoch while checkpoint selection is described as based on validation AUC. This creates a risk of developer exposure to test-set feedback, although it does not by itself demonstrate leakage or test-guided model selection. A controlled development process should keep the final test set inaccessible until model and analysis decisions are frozen. In addition, attention-based region-of-interest rankings are exploratory outputs; they do not establish causal mechanisms, validated biomarkers or individual clinical benefit.
+The binary ASD/control target cannot represent the diversity of autistic characteristics and support needs. Any future research into specific characteristics would require validated measures and professional interpretation. Fairness reporting must also protect small groups; validation and monitoring require resources. These trade-offs belong in the risk register.
 
 \subsection{PBG landscape, roles and decision gates}
-The proposed process-based governance (PBG) framework assigns responsibility across five lifecycle phases. The sponsor owns purpose and resources; the ML/data lead maintains technical records; the data steward documents provenance and quality; the privacy/security specialist reviews access; an independent reviewer challenges validation; and the clinical safety lead owns the safety case and monitoring. Autistic representatives contribute to priorities and proposed-use reviews. A release board records decisions and outstanding risks.
+The proposed process-based governance (PBG) framework spans five lifecycle phases. The sponsor owns purpose and resources; the ML/data lead maintains technical records; the data steward documents provenance; the privacy specialist reviews access; an independent reviewer challenges validation; the clinical safety lead owns the safety case; autistic representatives contribute to decisions; and a release board records approvals and residual risks.
 
 \small
 \setlength{\LTcapwidth}{\textwidth}
 \setlength{\tabcolsep}{3pt}
 \begin{longtable}{>{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}p{6.68cm} >{\raggedright\arraybackslash}p{6.68cm}}
-\caption{End-to-end ethical examination and proposed PBG controls. Potential non-compliance is distinguished from documented evidence gaps; controls are recommendations for redevelopment, not actions already completed.}
+\caption{Lifecycle ethical examination and proposed PBG controls. Evidence gaps are not treated as proof of misconduct; controls are recommendations, not completed actions.}
 \label{tab:lifecycle}\\
 \toprule
-\textbf{Lifecycle phase} & \textbf{End-to-end ethical examination: evidence, risk and possible non-compliance} & \textbf{PBG control, accountable lead and gate}\\
+\textbf{Phase} & \textbf{Ethical examination} & \textbf{PBG control and gate} \\
 \midrule
 \endfirsthead
 \toprule
-\textbf{Lifecycle phase} & \textbf{End-to-end ethical examination: evidence, risk and possible non-compliance} & \textbf{PBG control, accountable lead and gate}\\
+\textbf{Phase} & \textbf{Ethical examination} & \textbf{PBG control and gate} \\
 \midrule
 \endhead
 \midrule
@@ -214,11 +208,11 @@ The proposed process-based governance (PBG) framework assigns responsibility acr
 \endfoot
 \bottomrule
 \endlastfoot
-Problem formulation & The published objective is binary ASD/control classification, but no patient-relevant clinical pathway or demonstrated benefit is established. Treating a research label as an individual diagnosis would exceed the evidence and risk reducing autistic people to a category. The paper does not report autistic co-design; this is an evidence gap, not proof that it did not happen. & Sponsor and autistic advisory group define the legitimate research purpose, intended users, affected stakeholders, alternatives and prohibited uses. Complete an Alpha SIA, stakeholder map and risk register. Stop if a defensible purpose and meaningful participation cannot be established.\\
-Data extraction and acquisition & ABIDE-I is multi-site and male-skewed: the audited phenotype file is 85.3\% male, and 13 records lack six QC fields. The source reports local ethics review/anonymisation, but consent scope and all secondary-use conditions are not fully established by the reviewed material. Reuse without checking permissions, or treating this sample as population-representative, would be non-compliant. & Data steward records provenance, data-use permissions, consent/ethics basis, site and demographic composition, missingness and quality ratings in a dataset factsheet. Privacy lead reviews access, retention, security and re-identification risks. No acquisition/reuse until permissions and safeguards are documented.\\
-Data preprocessing & CPAC, filtering, Craddock parcellation, cropping and wavelet transformation are described by the authors, but their sensitivity and participant-level exclusion effects have not been independently reproduced. Excluding high-motion scans without subgroup analysis could alter group representation; silently changing preprocessing would undermine traceability. & ML/data lead versions code, parameters and environment; records every exclusion and missing value; compares alternative motion thresholds, harmonisation and preprocessing choices. Data steward checks group/site effects before the Alpha-to-Beta review.\\
-Modelling, testing and validation & The paper reports internal metrics, but not subgroup performance or independent external clinical validation. The public training code logs test metrics each epoch while checkpoint selection is described as validation-AUC-based: this creates avoidable exposure to test feedback, but does not prove leakage. Using a random split alone would not establish transfer to unseen sites. & Independent reviewer pre-registers metrics and subgroup analyses, freezes a participant-level test set, audits split integrity and evaluates discrimination, calibration, uncertainty, error rates and site-held-out/external performance. Publish a plain-language Fairness Position Statement and model card. No progression without acceptable evidence and documented residual risks.\\
-Deployment, monitoring and release & No clinical deployment, prospective monitoring, incident process or safety case is evidenced. Releasing predictions without clear limitations, trained users, human accountability or a route to challenge errors could cause misinterpretation and harm. A public repository is not equivalent to authorisation for clinical use. & Clinical safety lead and release board retain a research-only restriction. Any future pilot requires relevant approvals, implementer training, human review, accessible explanations, complaint/incident routes, drift and subgroup monitoring, predefined pause/rollback thresholds and periodic SIA reassessment. Beta is conditional, not current project status.\\
+Problem formulation & Binary classification is not a demonstrated patient benefit or diagnostic pathway. Autistic co-design is not documented. & Sponsor and autistic advisers define purpose, stakeholders, alternatives and prohibited uses. Complete Alpha SIA before data use; stop if purpose and participation are unjustified.\\
+Data acquisition & The phenotype file is male-skewed and has 13 records with incomplete QC fields. Consent scope and secondary-use conditions need confirmation. & Data steward records provenance, permissions, consent basis, demographics, missingness and quality. Privacy lead reviews access, retention and re-identification risk.\\
+Preprocessing & CPAC, filtering, parcellation, cropping and wavelet transformation are paper-reported but not independently reproduced here. Exclusions may affect group representation. & Version code, parameters and environment; log exclusions; test motion thresholds and site effects. Review at Alpha-to-Beta.\\
+Modelling and validation & Internal metrics are reported, but subgroup and independent external clinical validation are not. Test logging creates exposure risk; random splits alone do not establish site generalisation. & Independent reviewer freezes participant-level test data and assesses subgroup errors, calibration, uncertainty and site-held-out/external performance. No progression without acceptable evidence and a model card.\\
+Deployment and monitoring & No clinical deployment, prospective monitoring, incident process or safety case is evidenced. Repository availability is not clinical authorisation. & Retain research-only restriction. Any future pilot needs approvals, trained users, human review, complaint routes, drift/subgroup monitoring, pause and rollback thresholds, and SIA reassessment.\\
 \end{longtable}
 \normalsize
 
@@ -252,9 +246,9 @@ Deployment, monitoring and release & No clinical deployment, prospective monitor
 \label{fig:pbg}
 \end{figure}
 
-The process log should preserve dataset versions and permissions, preprocessing and exclusions, code/model versions, split identifiers, validation and fairness results, risk decisions, approvals, incidents and changes. Access controls must protect participant-level information. Named humans remain accountable; the model is not a responsible agent. Explanations should make technical limits and the social meaning of research classifications understandable to affected people.
+The process log should retain dataset permissions and versions, preprocessing and exclusions, code/model versions, split identifiers, validation and fairness results, risk decisions, approvals and incidents. Participant-level records require access controls; accountable humans—not the model—own decisions.
 
-At Alpha, the sponsor and autistic representatives assess purpose, impacts, alternatives and ethical permissibility before data use. At Alpha-to-Beta, the team checks whether design and validation evidence support the SIA, consults stakeholders, resolves critical risks and records the release-board decision. Beta reassessment applies only after a future authorised implementation: review monitoring and feedback, investigate harms and distributional shift, and pause, correct or withdraw when needed. Owners and dates for consultation and reassessment must be set before any pilot. These checkpoints follow Leslie's SIA and PBG guidance (\cite{leslie2019}).
+At Alpha, assess purpose, alternatives, affected groups and impacts before data use. At Alpha-to-Beta, resolve critical risks and document stakeholder review and release-board decisions. Beta reassessment applies only after a future authorised implementation: monitor harms and drift, investigate complaints, and pause or withdraw when thresholds are breached. Owners and review dates must be set before any pilot. These checkpoints follow Leslie's SIA and PBG guidance (\cite{leslie2019}).
 
 \section{Conclusion}
 BrainWaveNet remains a research prototype: its ABIDE-I results do not justify diagnosis or autonomous decisions. The phenotype audit identifies sample imbalance and diagnosis-associated motion differences, but is descriptive and does not evaluate model predictions. The reviewed evidence does not establish autistic co-design, subgroup performance, external clinical validation, full reproducibility or operational monitoring. These are evidence gaps, not proof of harm. The binary target also cannot represent individual autistic people's varied characteristics and support needs; any future validated measures would require professional interpretation and must not replace the person's voice.
