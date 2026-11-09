@@ -3,7 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[a4paper,margin=2.4cm]{geometry}
-\usepackage{setspace,microtype,graphicx,booktabs,tabularx,array,enumitem,hyperref,xcolor,float,caption}
+\usepackage{setspace,microtype,graphicx,booktabs,tabularx,longtable,array,enumitem,hyperref,xcolor,float,caption}
 \usepackage{tikz}
 \usepackage[backend=biber,style=authoryear,sorting=nyt,maxcitenames=2,maxbibnames=99]{biblatex}
 \usepackage{xurl}
@@ -185,23 +185,32 @@ FAST principles can conflict: subgroup reporting may improve fairness but expose
 \subsection{PBG landscape, roles and decision gates}
 The proposed process-based governance (PBG) framework assigns responsibility across five lifecycle phases. The sponsor owns purpose and resources; the ML/data lead maintains technical records; the data steward documents provenance and quality; the privacy/security specialist reviews access; an independent reviewer challenges validation; and the clinical safety lead owns the safety case and monitoring. Autistic representatives contribute to priorities and proposed-use reviews. A release board records decisions and outstanding risks.
 
-\begin{table}[H]
-\centering
 \small
-\begin{tabularx}{\textwidth}{p{2.35cm}Y Y}
+\setlength{\LTcapwidth}{\textwidth}
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}p{6.68cm} >{\raggedright\arraybackslash}p{6.68cm}}
+\caption{End-to-end ethical examination and proposed PBG controls. Potential non-compliance is distinguished from documented evidence gaps; controls are recommendations for redevelopment, not actions already completed.}
+\label{tab:lifecycle}\\
 \toprule
 \textbf{Lifecycle phase} & \textbf{End-to-end ethical examination: evidence, risk and possible non-compliance} & \textbf{PBG control, accountable lead and gate}\\
 \midrule
+\endfirsthead
+\toprule
+\textbf{Lifecycle phase} & \textbf{End-to-end ethical examination: evidence, risk and possible non-compliance} & \textbf{PBG control, accountable lead and gate}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
 Problem formulation & The published objective is binary ASD/control classification, but no patient-relevant clinical pathway or demonstrated benefit is established. Treating a research label as an individual diagnosis would exceed the evidence and risk reducing autistic people to a category. The paper does not report autistic co-design; this is an evidence gap, not proof that it did not happen. & Sponsor and autistic advisory group define the legitimate research purpose, intended users, affected stakeholders, alternatives and prohibited uses. Complete an Alpha SIA, stakeholder map and risk register. Stop if a defensible purpose and meaningful participation cannot be established.\\
 Data extraction and acquisition & ABIDE-I is multi-site and male-skewed: the audited phenotype file is 85.3\% male, and 13 records lack six QC fields. The source reports local ethics review/anonymisation, but consent scope and all secondary-use conditions are not fully established by the reviewed material. Reuse without checking permissions, or treating this sample as population-representative, would be non-compliant. & Data steward records provenance, data-use permissions, consent/ethics basis, site and demographic composition, missingness and quality ratings in a dataset factsheet. Privacy lead reviews access, retention, security and re-identification risks. No acquisition/reuse until permissions and safeguards are documented.\\
 Data preprocessing & CPAC, filtering, Craddock parcellation, cropping and wavelet transformation are described by the authors, but their sensitivity and participant-level exclusion effects have not been independently reproduced. Excluding high-motion scans without subgroup analysis could alter group representation; silently changing preprocessing would undermine traceability. & ML/data lead versions code, parameters and environment; records every exclusion and missing value; compares alternative motion thresholds, harmonisation and preprocessing choices. Data steward checks group/site effects before the Alpha-to-Beta review.\\
 Modelling, testing and validation & The paper reports internal metrics, but not subgroup performance or independent external clinical validation. The public training code logs test metrics each epoch while checkpoint selection is described as validation-AUC-based: this creates avoidable exposure to test feedback, but does not prove leakage. Using a random split alone would not establish transfer to unseen sites. & Independent reviewer pre-registers metrics and subgroup analyses, freezes a participant-level test set, audits split integrity and evaluates discrimination, calibration, uncertainty, error rates and site-held-out/external performance. Publish a plain-language Fairness Position Statement and model card. No progression without acceptable evidence and documented residual risks.\\
 Deployment, monitoring and release & No clinical deployment, prospective monitoring, incident process or safety case is evidenced. Releasing predictions without clear limitations, trained users, human accountability or a route to challenge errors could cause misinterpretation and harm. A public repository is not equivalent to authorisation for clinical use. & Clinical safety lead and release board retain a research-only restriction. Any future pilot requires relevant approvals, implementer training, human review, accessible explanations, complaint/incident routes, drift and subgroup monitoring, predefined pause/rollback thresholds and periodic SIA reassessment. Beta is conditional, not current project status.\\
-\bottomrule
-\end{tabularx}
-\caption{End-to-end ethical examination and proposed PBG controls. Potential non-compliance is distinguished from documented evidence gaps; controls are recommendations for redevelopment, not actions already completed.}
-\label{tab:lifecycle}
-\end{table}
+\end{longtable}
+\normalsize
 
 \begin{figure}[H]
 \centering
