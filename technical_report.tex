@@ -86,7 +86,7 @@ Care & Retrospective classification does not demonstrate improved wellbeing. Mis
 
 
 
-The phenotype file is male-skewed: 85.3\% of the 1,112 records are male. The imbalance is present in both diagnostic groups, with a lower proportion of female participants in the ASD group (12.1\%) than in the control group (17.3\%). This limits the strength of conclusions about model suitability across sexes, particularly because the paper does not report sex-disaggregated model performance. The distribution is shown in Figure~\ref{fig:abide-sex}; it describes the audited phenotype file and should not be assumed to represent the 897 participants retained in BrainWaveNet's analysis.
+The audited phenotype file is male-skewed: 85.3\% of its 1,112 records are male. Female participants account for 12.1\% of the ASD group and 17.3\% of controls. The paper does not report sex-disaggregated model performance, and these proportions must not be assumed to describe its 897-person analysis cohort (Figure~\ref{fig:abide-sex}). The notebook also matched valid CC200 time series for 1,035 participants (505 ASD; 530 controls). Mean absolute connectivity was 0.2927 in ASD and 0.2953 in controls (Hedges' $g=-0.032$), a very small descriptive difference that is not evidence of diagnostic discrimination. Mean framewise displacement was higher in ASD (0.1568, $n=504$) than controls (0.1032, $n=530$; $p<0.001$). This supports treating motion as a potential confound, not as a causal explanation or proof of model bias.
 
 \begin{figure}[H]
 \centering
@@ -121,10 +121,10 @@ FAST operationalises fairness, accountability, sustainability and transparency i
 \toprule
 \textbf{Principle} & \textbf{Risk or evidence gap} & \textbf{Control} \\
 \midrule
-Fairness & Aggregate metrics only; no age, sex, site or clinical subgroup results. The phenotype audit is male-skewed and shows higher mean motion in ASD. These are representativeness and confounding concerns, not proof of bias (\cite{jeong2024,dimartino2014}). & Justify the target; report subgroup errors, calibration and uncertainty; test motion and site sensitivity (\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}). \\
+Fairness & Aggregate metrics only; no age, sex, site or clinical subgroup results. The phenotype audit is male-skewed and shows higher mean motion in ASD. The exploratory connectivity difference between groups is very small. These are representativeness and confounding concerns, not proof of bias (\cite{jeong2024,dimartino2014}). & Justify the target; report subgroup errors, calibration and uncertainty; test motion and site sensitivity (\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}). \\
 Accountability & No clinical owner, release authority or incident process is identified. Test metrics are logged during training. & Name human owners; freeze test access; log decisions; define approval, pause and withdrawal authority (\cite{raji2020,who2021,gmlp2021}). \\
 Sustainability & Energy, hardware, maintenance and long-term costs are unreported. & Assess computational and institutional capacity and community impacts at each SIA review (\cite{leslie2019,who2021}). \\
-Transparency & The paper--README metric differences remain unresolved; accessible explanations for affected people are not established. & Reconcile results; version the pipeline; publish a model card covering purpose, uncertainty, intended use and limits (\cite{mitchell2019,who2021,gmlp2021}). \\
+Transparency & Paper--README metric differences and paper--configuration differences remain unresolved; the public repository also lacks the configured precomputed CWT input files and full upstream pipeline. & Reconcile results and inputs; version the pipeline; publish a model card covering purpose, uncertainty, intended use and limits (\cite{mitchell2019,who2021,gmlp2021}). \\
 \bottomrule
 \end{tabularx}
 \caption{Assessment against FAST principles.}
@@ -156,9 +156,9 @@ The PBG framework spans five lifecycle phases. The sponsor owns purpose and reso
 \bottomrule
 \endlastfoot
 Problem formulation & Patient benefit and autistic co-design are not demonstrated. & Sponsor and autistic advisers define purpose, alternatives and prohibited uses. Complete Alpha SIA before data use.\\
-Data acquisition & The phenotype file is male-skewed; 13 records have incomplete QC fields. Consent scope needs confirmation. & Data steward records provenance, permissions, demographics and quality; privacy lead reviews access and re-identification risk.\\
-Preprocessing & Reported CPAC, filtering, parcellation and wavelet steps were not reproduced. Exclusions may affect representation. & Version code and parameters; log exclusions; test motion and site effects at Alpha-to-Beta.\\
-Modelling and validation & Subgroup and independent external clinical validation are not reported. Repeated test logging exposes test feedback; random splits do not establish site generalisation. & Independent reviewer requires participant-level, preferably site-held-out validation; freezes test data until final evaluation; assesses subgroup errors, calibration and uncertainty. Resolve reproducibility gaps before progression.\\
+Data acquisition & The phenotype file is male-skewed, and consent scope for secondary use needs confirmation. & Data steward records provenance, permissions, demographics and quality; privacy lead reviews access and re-identification risk.\\
+Preprocessing & The coursework analysis uses CPAC CC200 ROI derivatives for descriptive connectivity, but does not reproduce the full CWT and model pipeline. Exclusions may affect representation. & Version code and parameters; log exclusions; test motion and site effects at Alpha-to-Beta.\\
+Modelling and validation & Subgroup and independent external clinical validation are not reported. Test metrics are logged each epoch, although validation AUC selects the checkpoint; this creates a risk of test-feedback leakage, not proof that the test set selected the model. Random splits do not establish site generalisation. & Independent reviewer requires participant-level, preferably site-held-out validation; freezes test data until final evaluation; assesses subgroup errors, calibration and uncertainty. Resolve reproducibility gaps before progression.\\
 Deployment and monitoring & No clinical deployment, monitoring or safety case is evidenced. Repository availability is not authorisation. & Retain research-only restriction. A future pilot requires approvals, trained users, human review, complaint routes, monitoring and pause/rollback thresholds.\\
 \end{longtable}
 \normalsize
