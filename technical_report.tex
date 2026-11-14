@@ -7,6 +7,7 @@
 \usepackage{tikz}
 \usepackage[backend=biber,style=authoryear,sorting=nyt,maxcitenames=2,maxbibnames=99]{biblatex}
 \usepackage{xurl}
+\usepackage{tocloft}
 \addbibresource{references.bib}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
 \hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!60!black,pdftitle={Responsible AI Technical Report: BrainWaveNet},pdfauthor={Levi Pedro Tejedor Rico}}
@@ -203,6 +204,8 @@ Immediate work should protect the final test set, reconcile paper--repository di
 \printbibliography[heading=bibintoc,title={References}]
 
 \appendix
-\section*{Appendix A}
+\renewcommand{\thesection}{Appendix~\Alph{section}}
+\setlength{\cftsecnumwidth}{7em}
+\section{ABIDE Dataset Analysis}
 
 \end{document}
