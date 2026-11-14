@@ -7,7 +7,6 @@
 \usepackage{tikz}
 \usepackage[backend=biber,style=authoryear,sorting=nyt,maxcitenames=2,maxbibnames=99]{biblatex}
 \usepackage{xurl}
-\usepackage{tocloft}
 \addbibresource{references.bib}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
 \hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!60!black,pdftitle={Responsible AI Technical Report: BrainWaveNet},pdfauthor={Levi Pedro Tejedor Rico}}
@@ -85,7 +84,7 @@ Care & Retrospective classification does not demonstrate improved wellbeing. Mis
 
 
 
-The audited phenotype file is male-skewed: 85.3\% of its 1,112 records are male. Female participants account for 12.1\% of the ASD group and 17.3\% of controls. The paper does not report sex-disaggregated model performance, and these proportions must not be assumed to describe its 897-person analysis cohort (Figure~\ref{fig:abide-sex}). The notebook matched valid CC200 time series to phenotype records by exact \texttt{FILE\_ID}, producing 1,035 matched participants (505 ASD; 530 controls). For each participant, Pearson correlations were calculated between the 200 ROI time series; the mean absolute value of valid off-diagonal correlations summarised connectivity. Constant or insufficiently observed ROI signals were excluded rather than replaced with zero. Mean absolute connectivity was 0.2927 in ASD and 0.2953 in controls (Hedges' $g=-0.032$), a very small descriptive difference that is not evidence of diagnostic discrimination. Mean framewise displacement was higher in ASD (0.1568, $n=504$) than controls (0.1032, $n=530$; Mann--Whitney $p<0.001$). The motion sensitivity models additionally adjusted for age, sex and site, but HC3 standard errors do not account for within-site dependence. These analyses are observational: the motion difference makes confounding plausible and weakens confidence in unadjusted connectivity comparisons, but does not establish causality or prove that BrainWaveNet uses motion-related artefacts.
+The audited phenotype file is male-skewed: 85.3\% of its 1,112 records are male. Female participants account for 12.1\% of the ASD group and 17.3\% of controls. The paper does not report sex-disaggregated model performance, and these proportions must not be assumed to describe its 897-person analysis cohort (Figure~\ref{fig:abide-sex}). The notebook matched valid CC200 time series to phenotype records by exact FILE\_ID, producing 1,035 matched participants (505 ASD; 530 controls). For each participant, Pearson correlations were calculated between the 200 ROI time series; the mean absolute value of valid off-diagonal correlations summarised connectivity. Constant or insufficiently observed ROI signals were excluded rather than replaced with zero. Mean absolute connectivity was 0.2927 in ASD and 0.2953 in controls (Hedges' $g=-0.032$), a very small descriptive difference that is not evidence of diagnostic discrimination. Mean framewise displacement was higher in ASD (0.1568, $n=504$) than controls (0.1032, $n=530$; Mann--Whitney $p<0.001$). The motion sensitivity models additionally adjusted for age, sex and site, but HC3 standard errors do not account for within-site dependence. These analyses are observational: the motion difference makes confounding plausible and weakens confidence in unadjusted connectivity comparisons, but does not establish causality or prove that BrainWaveNet uses motion-related artefacts.
 
 \begin{figure}[H]
 \centering
@@ -204,8 +203,8 @@ Immediate work should protect the final test set, reconcile paper--repository di
 \printbibliography[heading=bibintoc,title={References}]
 
 \appendix
-\renewcommand{\thesection}{Appendix~\Alph{section}}
-\setlength{\cftsecnumwidth}{7em}
-\section{ABIDE Dataset Analysis}
+\renewcommand{\thesection}{\Alph{section}}
+\section*{Appendix A: ABIDE-I Dataset Analysis}
+\addcontentsline{toc}{section}{Appendix A: ABIDE-I Dataset Analysis}
 
 \end{document}
