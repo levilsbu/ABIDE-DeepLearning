@@ -42,9 +42,7 @@ This report evaluates whether BrainWaveNet is suitable for use in a human health
 
 To answer this, the evaluation applies Leslie's SUM values alongside the FAST principles, translating them directly into a process-based governance (PBG) framework spanning problem formulation, data acquisition, preprocessing, modelling, validation, and deployment. The report distinguishes between information explicitly documented in the published research and issues for which evidence is not available. The absence of information in a paper is treated as an evidence gap, not as proof of deliberate omission. Recommendations are therefore based on the evidence that is currently available.
 
-The scope encompasses this specific model, dataset, and public code implementation, paying close attention to social impact, fairness, accountability, transparency, sustainability, privacy, clinical safety, and technical validity. The analysis relies strictly on the BrainWaveNet paper, ABIDE-I documentation, and the linked public repository; experiments are not independently re-run and identifiable participant data are not handled.
-
-This is not a clinical trial report, legal opinion or medical-device conformity assessment. It does not infer individual diagnostic capacity from group statistics or assume that research-data permissions extend to clinical use. Missing governance evidence is recorded as a gap, not misconduct. Section 2 outlines the research context, Section 3 assesses SUM/FAST and lifecycle controls, and Section 4 gives recommendations.
+The assessment covers BrainWaveNet, ABIDE-I and its public code, focusing on fairness, accountability, transparency, sustainability, privacy and clinical safety. It relies on the paper, dataset documentation and repository; experiments are not independently rerun and identifiable participant data are not handled. This is not a clinical trial or conformity assessment: group statistics cannot establish individual diagnostic capacity, and research permissions do not imply permission for clinical use. Missing evidence is treated as a gap, not misconduct.
 
 \section{AI Project Background}
 \subsection{Clinical and research context}
@@ -60,7 +58,7 @@ The published pipeline uses CPAC-preprocessed imaging, a 0.01--0.1 Hz band-pass 
 BrainWaveNet should be understood as a research classifier developed to distinguish labelled groups in a retrospective neuroimaging dataset. Its architecture and reported experimental results are part of the prior research literature; they do not, by themselves, establish a clinical diagnostic role, individual-level validity or benefit to patients. The distinction between research classification and clinical diagnosis is central to interpreting the project and is examined in the assessment that follows.
 
 \subsection{From imaging signal to computational representation}
-An rs-fMRI scan produces a sequence of volumetric images rather than a direct readout of neural activity. Preprocessing typically addresses motion and other acquisition artefacts, aligns images, and maps regional signals into a common representation. An atlas divides the brain into regions of interest; correlations or other temporal features can then be used to describe functional connectivity. Each stage introduces assumptions: motion correction cannot remove every artefact, atlas choice changes regional boundaries, and filtering determines which temporal variation is retained. Results therefore depend on acquisition and processing choices as well as the learning algorithm.
+An rs-fMRI scan produces volumetric images over time, not a direct readout of neural activity. Preprocessing addresses motion and acquisition artefacts before an atlas maps regional signals into regions of interest. Correlations can then describe functional connectivity. Motion correction, atlas choice and filtering each introduce assumptions, so results depend on processing decisions as well as the learning algorithm.
 
 \section{Responsible AI Assessment}
 
@@ -134,7 +132,7 @@ Transparency & Paper--README metric differences and paper--configuration differe
 
 
 \subsection{PBG landscape, roles and decision gates}
-The PBG framework spans five lifecycle phases. The sponsor owns purpose and resources; the ML/data lead maintains technical records; the data steward documents provenance; the privacy specialist reviews access; an independent reviewer challenges validation; the clinical safety lead owns the safety case; autistic representatives contribute; and the release board controls progression.
+The PBG framework spans five lifecycle phases. The sponsor owns purpose; the ML/data lead maintains technical records; the data steward documents provenance; the privacy specialist reviews access; independent and clinical safety leads challenge validation and safety; autistic representatives contribute; and the release board controls progression.
 
 \small
 \setlength{\LTcapwidth}{\textwidth}
@@ -193,7 +191,7 @@ Deployment and monitoring & No clinical deployment, monitoring or safety case is
 \label{fig:pbg}
 \end{figure}
 
-The process log should retain permissions, data and model versions, exclusions, validation results, approvals and incidents, with access controls for participant-level records. At Alpha, assess purpose, alternatives and affected groups before data use. At Alpha-to-Beta, resolve critical risks and record stakeholder and release-board decisions. Beta reassessment applies only to a future authorised implementation, with monitoring, complaint investigation and pause or withdrawal thresholds. Owners and review dates must be assigned before any pilot. These checkpoints follow Leslie's SIA and PBG guidance (\cite{leslie2019}).
+The process log should retain permissions, versions, exclusions, validation, approvals and incidents, with access controls for participant records. Alpha assesses purpose and affected groups before data use; Alpha-to-Beta resolves critical risks and records stakeholder decisions. Beta applies only to a future authorised implementation, with monitoring, complaint routes and pause or withdrawal thresholds. Assign owners and review dates before any pilot (\cite{leslie2019}).
 
 \section{Conclusion}
 BrainWaveNet remains a research prototype: its ABIDE-I results do not justify diagnosis or autonomous decisions. The phenotype audit identifies sample imbalance and diagnosis-associated motion differences, but is descriptive and does not evaluate model predictions. The reviewed evidence does not establish autistic co-design, subgroup performance, external clinical validation, full reproducibility or operational monitoring. These are evidence gaps, not proof of harm. The binary target also cannot represent individual autistic people's varied characteristics and support needs; any future validated measures would require professional interpretation and must not replace the person's voice.
