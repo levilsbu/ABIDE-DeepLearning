@@ -119,10 +119,10 @@ FAST operationalises fairness, accountability, sustainability and transparency i
 \toprule
 \textbf{Principle} & \textbf{Risk or evidence gap} & \textbf{Control} \\
 \midrule
-Fairness & Aggregate metrics only; no age, sex, site or clinical subgroup results. The phenotype audit is male-skewed and shows higher mean motion in ASD. The exploratory connectivity difference between groups is very small. These are representativeness and confounding concerns, not proof of bias (\cite{jeong2024,dimartino2014}). & Justify the target; report subgroup errors, calibration and uncertainty; test motion and site sensitivity (\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}). \\
+Fairness & No age-, sex- or site-disaggregated BrainWaveNet error rates are reported. In the matched EDA cohort (1,035 participants), site-by-diagnosis composition was not significantly associated ($\\chi^2(19)=17.36$, $p=0.565$); this does not establish identical site composition or remove acquisition-related site effects. Mean framewise displacement was higher in ASD, while the overall connectivity difference was negligible (Hedges' $g=-0.032$). These findings identify representativeness and confounding risks, not demonstrated model bias (\\cite{jeong2024,dimartino2014}). & Justify the binary target; report subgroup errors, calibration and uncertainty; conduct site-held-out validation and motion sensitivity analysis before any performance claim (\\cite{abraham2017,mehrabi2021,suresh2021,rajkomar2018,obermeyer2019}). \\
 Accountability & No clinical owner, release authority or incident process is identified. Test metrics are logged during training. & Name human owners; freeze test access; log decisions; define approval, pause and withdrawal authority (\cite{raji2020,who2021,gmlp2021}). \\
 Sustainability & Energy, hardware, maintenance and long-term costs are unreported. & Assess computational and institutional capacity and community impacts at each SIA review (\cite{leslie2019,who2021}). \\
-Transparency & Paper--README metric differences and paper--configuration differences remain unresolved; the public repository also lacks the configured precomputed CWT input files and full upstream pipeline. & Reconcile results and inputs; version the pipeline; publish a model card covering purpose, uncertainty, intended use and limits (\cite{mitchell2019,who2021,gmlp2021}). \\
+Transparency & Differences between Jeong et al.'s paper and the official BrainWaveNet repository README, together with differences in reported configurations, remain unresolved. The coursework repository is separate; its README was not used as evidence. The public implementation also does not provide all configured precomputed CWT inputs and upstream processing artefacts needed for end-to-end reproduction. & Reconcile paper, code and configuration; version inputs and pipeline; publish a model card covering purpose, uncertainty, intended use and limits (\\cite{mitchell2019,who2021,gmlp2021}). \\
 \bottomrule
 \end{tabularx}
 \caption{Assessment against FAST principles.}
@@ -132,7 +132,7 @@ Transparency & Paper--README metric differences and paper--configuration differe
 
 
 \subsection{PBG landscape, roles and decision gates}
-The PBG framework spans five lifecycle phases. The sponsor owns purpose; the ML/data lead maintains technical records; the data steward documents provenance; the privacy specialist reviews access; independent and clinical safety leads challenge validation and safety; autistic representatives contribute; and the release board controls progression.
+The PBG framework spans five lifecycle phases. For this ABIDE-I case, roles must be assigned before any redevelopment or pilot; one person may hold multiple roles in a small team, but approval and challenge responsibilities must remain explicit. The sponsor owns purpose and prohibited uses; the data steward verifies ABIDE permissions, provenance and linkage controls; the ML lead owns preprocessing, code and model versioning; a validation lead controls participant-level splits and the untouched test set; a privacy lead reviews access and re-identification risk; autistic advisers influence purpose and acceptable outcomes; and a clinical safety/release authority decides whether a proposed pilot can proceed, pause or be withdrawn. The current coursework analysis does not establish that these governance roles or approvals are already in place.
 
 \small
 \setlength{\LTcapwidth}{\textwidth}
@@ -191,7 +191,7 @@ Deployment and monitoring & No clinical deployment, monitoring or safety case is
 \label{fig:pbg}
 \end{figure}
 
-The process log should retain permissions, versions, exclusions, validation, approvals and incidents, with access controls for participant records. At Alpha, an autistic advisory group should be recruited through relevant community organisations, with accessible materials, compensation and a documented route to influence the purpose, acceptable outcomes and prohibited uses. At Alpha-to-Beta, the project should publish how this feedback changed (or did not change) design decisions and explain why. Beta applies only to a future authorised implementation, with monitoring, complaint routes and pause or withdrawal thresholds. Assign owners and review dates before any pilot (\cite{leslie2019}).
+The process log should retain, for each gate, the decision, date, accountable owner, evidence reviewed, unresolved risks, dissenting views, approval conditions and next review date. The risk register should track binary-label limitations; sex and age representativeness; motion-related data quality; site/acquisition heterogeneity; consent and secondary-use permissions; test-set leakage and reproducibility; and clinical misuse or automation bias. Each entry needs a likelihood/impact judgement, mitigation, residual-risk owner and escalation threshold. These are proposed controls, not records of controls already completed.\n\nAt Alpha, the sponsor and autistic advisers should agree the research question, intended beneficiaries, alternatives and prohibited uses before new data use. The data steward should evidence permitted ABIDE use and document data flows. At Alpha-to-Beta, the validation lead should present preprocessing provenance, exclusion counts, site and motion analyses, split integrity and independent validation evidence; the release authority should record a go/no-go decision. The executed site-by-diagnosis analysis found no statistically significant association ($\\chi^2(19)=17.36$, $p=0.565$), but this is not site-held-out model validation and does not rule out scanner or acquisition effects. Beta applies only to a future authorised implementation: monitor subgroup performance, drift, complaints and unintended impacts, with pre-agreed pause and rollback thresholds. Document how stakeholder feedback changed (or did not change) decisions and why (\\cite{leslie2019}).
 
 \section{Conclusion}
 BrainWaveNet remains a research prototype: its ABIDE-I results do not justify diagnosis or autonomous decisions. The phenotype audit identifies sample imbalance and diagnosis-associated motion differences, but is descriptive and does not evaluate model predictions. The reviewed evidence does not establish autistic co-design, subgroup performance, external clinical validation, full reproducibility or operational monitoring. These are evidence gaps, not proof of harm. The binary target also cannot represent individual autistic people's varied characteristics and support needs; any future validated measures would require professional interpretation and must not replace the person's voice.
@@ -206,5 +206,46 @@ Immediate work should protect the final test set, reconcile paper--repository di
 \renewcommand{\thesection}{\Alph{section}}
 \section*{Appendix A: ABIDE-I Dataset Analysis}
 \addcontentsline{toc}{section}{Appendix A: ABIDE-I Dataset Analysis}
+
+The exploratory notebook matched 1,035 valid CPAC filt_noglobal, rois_cc200 time-series files to phenotype records using exact FILE_ID matching (505 ASD; 530 controls). It found no duplicate matched FILE_ID, no unmatched ROI files and no phenotype records without a matched ROI file within the downloaded cohort. Each participant was represented by a 200-region time series; the number of time points ranged from 78 to 316 (mean 194.5). These are properties of the analysed subset, not the full ABIDE-I release or BrainWaveNet's separately reported 897-person cohort.
+
+The site-by-diagnosis counts for the matched cohort are shown in Table~\ref{tab:site-diagnosis}. A Pearson chi-square test found no statistically significant association between site and diagnosis composition, $\chi^2(19)=17.36$, $p=0.565$. This means the analysis did not detect a difference at the 5\% level; it does not prove identical site composition, interchangeability of sites, or absence of acquisition effects. NYU contributed the largest share (175/1,035; 16.9\%). The ASD proportion ranged from 38.2\% at UM\_2 (13 ASD, 21 controls) to 64.8\% at USM (46 ASD, 25 controls), so percentages at smaller sites should be interpreted alongside counts.
+
+The analysis also found higher mean framewise displacement in ASD (0.1568; $n=504$) than controls (0.1032; $n=530$; Mann--Whitney $p=1.43\times10^{-9}$). Mean absolute connectivity was 0.2927 for ASD and 0.2953 for controls (Hedges' $g=-0.032$). In an exploratory OLS model adjusted for age, sex, site fixed effects and mean framewise displacement, the ASD coefficient was $-0.0109$ (HC3 SE 0.00484, $p=0.0245$); HC3 standard errors do not account for within-site dependence, so inference should be cautious. None of these descriptive or adjusted associations measures BrainWaveNet's predictive performance, establishes causality, or demonstrates that its model uses motion or site signals.
+
+\begin{longtable}{lrrr}
+\caption{Site-by-diagnosis counts in the 1,035-person matched CC200 cohort.}\label{tab:site-diagnosis}\\
+\toprule
+\textbf{Site} & \textbf{ASD} & \textbf{Control} & \textbf{Total} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Site} & \textbf{ASD} & \textbf{Control} & \textbf{Total} \\
+\midrule
+\endhead
+CALTECH & 19 & 18 & 37 \\
+CMU & 14 & 13 & 27 \\
+KKI & 20 & 28 & 48 \\
+LEUVEN\_1 & 14 & 15 & 29 \\
+LEUVEN\_2 & 15 & 19 & 34 \\
+MAX\_MUN & 24 & 28 & 52 \\
+NYU & 75 & 100 & 175 \\
+OHSU & 12 & 14 & 26 \\
+OLIN & 19 & 15 & 34 \\
+PITT & 29 & 27 & 56 \\
+SBL & 15 & 15 & 30 \\
+SDSU & 14 & 22 & 36 \\
+STANFORD & 19 & 20 & 39 \\
+TRINITY & 22 & 25 & 47 \\
+UCLA\_1 & 41 & 31 & 72 \\
+UCLA\_2 & 13 & 13 & 26 \\
+UM\_1 & 53 & 53 & 106 \\
+UM\_2 & 13 & 21 & 34 \\
+USM & 46 & 25 & 71 \\
+YALE & 28 & 28 & 56 \\
+\midrule
+\textbf{Total} & \textbf{505} & \textbf{530} & \textbf{1,035} \\
+\bottomrule
+\end{longtable}
 
 \end{document}
